@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Main from "./pages/Main";
+import Detail from "./pages/Detail";
+import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Shopping from "./pages/Shopping";
+import { Route, Router } from "react-router-dom";
+import React from "react";
+import { history } from "./redux/configStore";
+import { ConnectedRouter } from "connected-react-router";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <ConnectedRouter history={history}>
+        <Route path="/" exact component={Main} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/signup" exact component={SignUp} />
+        <Route path="/detail" exact component={Detail} />
+        <Route path="/shopping" exact component={Shopping} />
+        <Route path="/cart" exact component={Cart} />
+      </ConnectedRouter>
+    </React.Fragment>
   );
 }
 
