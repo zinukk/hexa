@@ -14,7 +14,7 @@ import bottombanner from "../shared/img/bottombanner.png";
 const Main = () => {
   return (
     <React.Fragment>
-      <Header/>
+      <Header />
       <Grid margin="96px auto">
         <Grid>
           <MainImg />
@@ -34,7 +34,7 @@ const Main = () => {
             정육각 베스트 상품
           </h5>
         </Grid>
-          <Post />
+        <Post />
       </Grid>
       <Grid padding="3rem 14rem 3rem 14rem">
         <BottomBanner />
