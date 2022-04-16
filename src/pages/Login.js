@@ -1,21 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { history } from "../redux/configStore";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const [username, setusername] = useState("");
+  const [password, setPassword] = useState("");
+
+  // 토큰 체크
+  const is_token = sessionStorage.getItem("token");
+
+  // 토큰이 있다면, 바로 메인페이지로 이동하도록 실행
+  useEffect(() => {
+    if (is_token) {
+      history.replace("/");
+    }
+  }, []);
+
+  const login = () => {
+    if (username === "") {
+      window.alert("아이디를 입력해주세요");
+      return;
+    }
+    if (password === "") {
+      window.alert("비밀번호를 입력해주세요");
+      return;
+    }
+
+    dispatch(userActions.loginDB(username, password));
+  };
+
   return (
     <React.Fragment>
       <Header />
       <LoginText1>로그인</LoginText1>
       <Container>
         <LoginBox>
-          <LoginText2>이메일 로그인</LoginText2>
-          <LogInput type={Text} placeholder="아이디를 입력하세요"></LogInput>
-          <LogInput type={Text} placeholder="비밀번호를 입력하세요"></LogInput>
+          <form>
+            <LoginText2>일반 로그인</LoginText2>
+            <LogInput
+              placeholder="아이디를 입력하세요"
+              onChange={(e) => {
+                setusername(e.target.value);
+              }}
+            ></LogInput>
+            <LogInput
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              autoComplete="on"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            ></LogInput>
+          </form>
           <LoginButton>로그인</LoginButton>
-          <FindButton>아이디 / 비밀번호 찾기</FindButton>
+          <FindButton
+            onClick={() => {
+              login();
+            }}
+          >
+            아이디 / 비밀번호 찾기
+          </FindButton>
         </LoginBox>
         <SocialBox>
           <LoginText2>SNS 간편 로그인</LoginText2>

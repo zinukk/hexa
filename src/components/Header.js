@@ -84,6 +84,7 @@ const Container = styled.div`
   background: black;
   position: fixed;
   top: 0px;
+  z-index: 10000;
 `;
 
 const HeaderBox = styled.div`

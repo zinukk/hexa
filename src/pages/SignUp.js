@@ -1,9 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useDispatch } from "react-redux";
+import { usernameCheck, checkName, checkPassword } from "../shared/SignupCheck";
+import { createActions as userActions } from "redux-actions";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+
+  const signup = () => {
+    if (
+      username === "" ||
+      name === "" ||
+      password === "" ||
+      passwordCheck === ""
+    ) {
+      window.alert("아이디, 비밀번호, 이름을 모두 입력해주세요");
+      return;
+    }
+    if (!usernameCheck(username)) {
+      window.alert("아이디는 영문, 숫자로만 입력해주세요");
+      return;
+    }
+    if (!checkPassword(password)) {
+      window.alert(
+        "비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다"
+      );
+      return;
+    }
+    if (!checkName(name)) {
+      window.alert("이름은 2글자 이상 6글자 이하로 입력해주세요");
+      return;
+    }
+    if (password.includes(username)) {
+      alert("비밀번호에 아이디가 포함되어 있습니다");
+      return;
+    }
+    if (password !== passwordCheck) {
+      alert("비밀번호가 다릅니다.");
+      return;
+    }
+
+    dispatch(userActions.signupDB(username, password, passwordCheck, name));
+  };
+
   return (
     <React.Fragment>
       <Header />
@@ -11,44 +57,75 @@ const SignUp = () => {
       <Container>
         <SignupText>회원가입</SignupText>
         <p style={{ fontSize: "15px", marginBottom: "15px" }}>가입정보 입력</p>
-        <FlexBox>
-          <KeyBox>
-            <KeyTxt>아이디</KeyTxt>
-          </KeyBox>
-          <ValueBox>
-            <LoginInput />
-          </ValueBox>
-        </FlexBox>
+        <form>
+          <FlexBox>
+            <KeyBox>
+              <KeyTxt>아이디</KeyTxt>
+            </KeyBox>
+            <ValueBox>
+              <LoginInput
+                type="text"
+                name="username"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+                placeholder="아이디는 영문, 숫자로만 입력해주세요"
+              />
+            </ValueBox>
+          </FlexBox>
 
-        <FlexBox>
-          <KeyBox>
-            <KeyTxt>비밀번호</KeyTxt>
-          </KeyBox>
-          <ValueBox>
-            <LoginInput />
-          </ValueBox>
-        </FlexBox>
+          <FlexBox>
+            <KeyBox>
+              <KeyTxt>비밀번호</KeyTxt>
+            </KeyBox>
+            <ValueBox>
+              <LoginInput
+                type="password"
+                name="password"
+                autoComplete="off"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                placeholder="비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다"
+              />
+            </ValueBox>
+          </FlexBox>
 
-        <FlexBox>
-          <KeyBox>
-            <KeyTxt>비밀번호 확인</KeyTxt>
-          </KeyBox>
-          <ValueBox>
-            <LoginInput />
-          </ValueBox>
-        </FlexBox>
+          <FlexBox>
+            <KeyBox>
+              <KeyTxt>비밀번호 확인</KeyTxt>
+            </KeyBox>
+            <ValueBox>
+              <LoginInput
+                type="password"
+                name="passwordCheck"
+                autoComplete="off"
+                onChange={(e) => {
+                  setPasswordCheck(e.target.value);
+                }}
+                placeholder="비밀번호를 다시 입력해주세요"
+              />
+            </ValueBox>
+          </FlexBox>
 
-        <FlexBox>
-          <KeyBox style={{ borderBottom: "1px solid #e1dedf" }}>
-            <KeyTxt>이름</KeyTxt>
-          </KeyBox>
-          <ValueBox style={{ borderBottom: "1px solid #e1dedf" }}>
-            <LoginInput type={Text} />
-          </ValueBox>
-        </FlexBox>
-
+          <FlexBox>
+            <KeyBox style={{ borderBottom: "1px solid #e1dedf" }}>
+              <KeyTxt>이름</KeyTxt>
+            </KeyBox>
+            <ValueBox style={{ borderBottom: "1px solid #e1dedf" }}>
+              <LoginInput
+                type="text"
+                name="nickname"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                placeholder="이름은 2글자 이상 6글자 이하로 입력해주세요"
+              />
+            </ValueBox>
+          </FlexBox>
+        </form>
         <BackButton>이전으로</BackButton>
-        <SubmitButton>가입하기</SubmitButton>
+        <SubmitButton onClick={signup}>가입하기</SubmitButton>
       </Container>
 
       <Footer />
