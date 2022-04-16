@@ -34,7 +34,9 @@ const Main = () => {
             정육각 베스트 상품
           </h5>
         </Grid>
-        <Post />
+        <Grid>
+          <Post />
+        </Grid>
       </Grid>
       <Grid padding="3rem 14rem 3rem 14rem">
         <BottomBanner />
