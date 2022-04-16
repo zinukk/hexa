@@ -5,6 +5,7 @@ import Post from "../components/Post";
 import Grid from "../elements/Grid";
 import Text from "../elements/Text";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 import mainimg from "../shared/img/mainimg.png";
 import slideimg1 from "../shared/img/slideimg1.png";
@@ -41,6 +42,7 @@ const Main = () => {
       <Grid padding="3rem 14rem 3rem 14rem">
         <BottomBanner />
       </Grid>
+      <Footer />
     </React.Fragment>
   );
 };
