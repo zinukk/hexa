@@ -8,7 +8,6 @@ const Login = () => {
   return (
     <React.Fragment>
       <Header />
-
       <LoginText1>로그인</LoginText1>
       <Container>
         <LoginBox>
@@ -85,6 +84,7 @@ const LoginButton = styled.button`
   font-size: 16px;
   margin-top: 8px;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 const FindButton = styled.button`
@@ -96,6 +96,7 @@ const FindButton = styled.button`
   font-size: 16px;
   margin-top: 8px;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 const KakaoButton = styled.button`
@@ -107,6 +108,7 @@ const KakaoButton = styled.button`
   font-size: 16px;
   margin-top: 8px;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 const NaverButton = styled.button`
@@ -118,6 +120,7 @@ const NaverButton = styled.button`
   font-size: 16px;
   margin-top: 14px;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 export default Login;

@@ -8,8 +8,8 @@ import { MdPhoneIphone } from "react-icons/md";
 const Footer = () => {
   return (
     <React.Fragment>
-      <Container>
-        <FooterTopBox>
+      <Container1>
+        <TopBox>
           <div style={{ display: "flex" }}>
             <p style={{ marginRight: "20px" }}>이용약관</p>
             <p style={{ fontWeight: "bold" }}>개인정보처리방침</p>
@@ -28,83 +28,74 @@ const Footer = () => {
               <AiOutlineInstagram style={{ width: "27px", height: "27px" }} />
             </a>
           </div>
-        </FooterTopBox>
-        <LineBox>
-          <FooterBottomBox>
-            <div>
-              <img src="image/miniLogo.png" />
-              <div
-                style={{
-                  lineHeight: "22px",
-                  fontSize: "14px",
-                  marginTop: "5px",
-                }}
-              >
-                (주)정육각 대표이사: 김재연 | 주소: 경기도 김포시 고촌읍
-                아라육로57번길 126 <br />
-                사업자등록번호 : 224-87-00271 [조회]|통신판매업신고번호:
-                2021-경기김포-0668 <br />
-                개인정보관리책임자: 박준태(privacy@yookgak.com)
-              </div>
-              <div style={{ marginTop: "30px" }}>
-                © 2021 Jeongyookgak Inc. All rights reserved.
-              </div>
-            </div>
-            <TextRight>
-              <p style={{ fontWeight: "bold", fontSize: "16px" }}>고객센터</p>
-              <p style={{ fontWeight: "bold", fontSize: "26px" }}>1800-0658</p>
-              <p style={{ fontSize: "13px", color: "gray" }}>
-                평일: 08:30 - 17:30 <br />
-                점심: 12:30 - 13:30 <br />
-                (토, 일 및 공휴일 휴무)
-                <br />
-              </p>
-              <p style={{ fontSize: "15px", marginTop: "10px" }}>
-                카카오톡:{" "}
-                <span style={{ color: "skyblue", margintop: "10px" }}>
-                  @정육각
-                </span>
-              </p>
-              <p style={{ fontSize: "15px" }}>
-                이메일:{" "}
-                <span style={{ color: "skyblue" }}>help@yookgak.com</span>
-              </p>
-              <FooterButton>자주묻는질문</FooterButton>
-              <FooterButton>1:1문의</FooterButton>
-            </TextRight>
-          </FooterBottomBox>
-        </LineBox>
-      </Container>
+        </TopBox>
+      </Container1>
+      <BottomBox>
+        <div>
+          <img src="image/miniLogo.png" />
+          <div
+            style={{
+              lineHeight: "22px",
+              fontSize: "14px",
+              marginTop: "5px",
+            }}
+          >
+            (주)정육각 대표이사: 김재연 | 주소: 경기도 김포시 고촌읍
+            아라육로57번길 126 <br />
+            사업자등록번호 : 224-87-00271 [조회]|통신판매업신고번호:
+            2021-경기김포-0668 <br />
+            개인정보관리책임자: 박준태(privacy@yookgak.com)
+          </div>
+          <div style={{ marginTop: "30px" }}>
+            © 2021 Jeongyookgak Inc. All rights reserved.
+          </div>
+        </div>
+
+        <div style={{ textAlign: "right" }}>
+          <p style={{ fontWeight: "bold", fontSize: "16px" }}>고객센터</p>
+          <p style={{ fontWeight: "bold", fontSize: "26px" }}>1800-0658</p>
+          <p style={{ fontSize: "13px", color: "gray" }}>
+            평일: 08:30 - 17:30 <br />
+            점심: 12:30 - 13:30 <br />
+            (토, 일 및 공휴일 휴무)
+            <br />
+          </p>
+          <p style={{ fontSize: "15px", marginTop: "10px" }}>
+            카카오톡:{" "}
+            <span style={{ color: "skyblue", margintop: "10px" }}>@정육각</span>
+          </p>
+          <p style={{ fontSize: "15px" }}>
+            이메일: <span style={{ color: "skyblue" }}>help@yookgak.com</span>
+          </p>
+          <FooterButton>자주묻는질문</FooterButton>
+          <FooterButton>1:1문의</FooterButton>
+        </div>
+      </BottomBox>
     </React.Fragment>
   );
 };
 
-const Container = styled.div`
+const Container1 = styled.div`
   width: 100%;
-  height: fit-content;
-  margin: auto;
   border-top: 1px solid gray;
-  padding-top: 25px;
+  border-bottom: 1px solid #eee;
+  margin-top: 100px;
 `;
-const FooterTopBox = styled.div`
+const TopBox = styled.div`
   width: 1184px;
-  minwidth: 1184px;
-  height: 40px;
+  height: 60px;
   display: flex;
-  margin: 0 auto;
   justify-content: space-between;
+  margin: 5px auto;
+  padding-top: 20px;
 `;
 
-const FooterBottomBox = styled.div`
+const BottomBox = styled.div`
   width: 1184px;
-  minwidth: 1184px;
+  height: 200px;
   display: flex;
-  margin: 0 auto;
   justify-content: space-between;
-`;
-
-const TextRight = styled.div`
-  text-align: right;
+  margin: 5px auto;
 `;
 
 const FooterButton = styled.button`
@@ -117,12 +108,6 @@ const FooterButton = styled.button`
   background: #fff;
   margin-left: 10px;
   margin-top: 10px;
-`;
-
-const LineBox = styled.div`
-  width: 100%;
-  border-top: 1px solid #eee;
-  padding: 20px 0;
 `;
 
 export default Footer;

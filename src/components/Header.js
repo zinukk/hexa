@@ -20,9 +20,27 @@ const Header = () => {
                 history.push("/");
               }}
             />
-            <HeaderTxt1>쇼핑하기</HeaderTxt1>
-            <HeaderTxt1>배송안내</HeaderTxt1>
-            <HeaderTxt1>이벤트</HeaderTxt1>
+            <HeaderTxt1
+              onClick={() => {
+                history.push("/shoppork");
+              }}
+            >
+              쇼핑하기
+            </HeaderTxt1>
+            <HeaderTxt1
+              onClick={() => {
+                window.alert("준비중인 서비스입니다!");
+              }}
+            >
+              배송안내
+            </HeaderTxt1>
+            <HeaderTxt1
+              onClick={() => {
+                window.alert("준비중인 서비스입니다!");
+              }}
+            >
+              이벤트
+            </HeaderTxt1>
           </FlexBox1>
           <FlexBox2>
             <HeaderTxt2
