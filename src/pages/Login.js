@@ -9,8 +9,35 @@ import { useDispatch } from "react-redux";
 const Login = () => {
   const dispatch = useDispatch();
 
-  const [username, setusername] = useState("");
-  const [password, setPassword] = useState("");
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const login_click = () => {
+    console.log(values);
+
+    const Login_info = {
+      username: values.username,
+      password: values.password,
+    };
+
+    if (values.username === "") {
+      window.alert("아이디를 입력해주세요");
+      return;
+    }
+    if (values.password === "") {
+      window.alert("비밀번호를 입력해주세요");
+      return;
+    }
+    console.log("성공");
+
+    dispatch(userActions.loginDB(Login_info));
+  };
 
   // 토큰 체크
   const is_token = sessionStorage.getItem("token");
@@ -22,19 +49,6 @@ const Login = () => {
     }
   }, []);
 
-  const login = () => {
-    if (username === "") {
-      window.alert("아이디를 입력해주세요");
-      return;
-    }
-    if (password === "") {
-      window.alert("비밀번호를 입력해주세요");
-      return;
-    }
-
-    dispatch(userActions.loginDB(username, password));
-  };
-
   return (
     <React.Fragment>
       <Header />
@@ -45,27 +59,17 @@ const Login = () => {
             <LoginText2>일반 로그인</LoginText2>
             <LogInput
               placeholder="아이디를 입력하세요"
-              onChange={(e) => {
-                setusername(e.target.value);
-              }}
+              onChange={handleChange("username")}
             ></LogInput>
             <LogInput
               type="password"
               placeholder="비밀번호를 입력하세요"
               autoComplete="on"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={handleChange("password")}
             ></LogInput>
           </form>
-          <LoginButton>로그인</LoginButton>
-          <FindButton
-            onClick={() => {
-              login();
-            }}
-          >
-            아이디 / 비밀번호 찾기
-          </FindButton>
+          <LoginButton onClick={login_click}>로그인</LoginButton>
+          <FindButton>아이디 / 비밀번호 찾기</FindButton>
         </LoginBox>
         <SocialBox>
           <LoginText2>SNS 간편 로그인</LoginText2>

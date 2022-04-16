@@ -1,82 +1,170 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Header = () => {
-  return (
-    <React.Fragment>
-      <Container>
-        <HeaderBox>
-          <FlexBox1>
-            <img
-              src="image/hexaLogo.png"
-              style={{
-                width: "140px",
-                height: "59px",
-                marginRight: "28px",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                history.push("/");
-              }}
-            />
-            <HeaderTxt1
-              onClick={() => {
-                history.push("/shoppork");
-              }}
-            >
-              쇼핑하기
-            </HeaderTxt1>
-            <HeaderTxt1
-              onClick={() => {
-                window.alert("준비중인 서비스입니다!");
-              }}
-            >
-              배송안내
-            </HeaderTxt1>
-            <HeaderTxt1
-              onClick={() => {
-                window.alert("준비중인 서비스입니다!");
-              }}
-            >
-              이벤트
-            </HeaderTxt1>
-          </FlexBox1>
-          <FlexBox2>
-            <HeaderTxt2
-              onClick={() => {
-                window.alert("준비중인 서비스입니다!");
-              }}
-            >
-              공지사항
-            </HeaderTxt2>
-            <HeaderTxt2
-              onClick={() => {
-                window.alert("준비중인 서비스입니다!");
-              }}
-            >
-              고객센터
-            </HeaderTxt2>
-            <HeaderTxt2>|</HeaderTxt2>
-            <HeaderTxt2
-              onClick={() => {
-                history.push("/login");
-              }}
-            >
-              로그인
-            </HeaderTxt2>
-            <HeaderTxt2
-              onClick={() => {
-                history.push("/signup");
-              }}
-            >
-              회원가입
-            </HeaderTxt2>
-          </FlexBox2>
-        </HeaderBox>
-      </Container>
-    </React.Fragment>
-  );
+  const dispatch = useDispatch();
+
+  const is_login = useSelector((store) => store?.user?.user?.status);
+
+  const logout = () => {
+    console.log("로그아웃버튼");
+    dispatch(userActions.logoutDB());
+  };
+
+  if (is_login == true) {
+    return (
+      <React.Fragment>
+        <Container>
+          <HeaderBox>
+            <FlexBox1>
+              <img
+                src="image/hexaLogo.png"
+                style={{
+                  width: "140px",
+                  height: "59px",
+                  marginRight: "28px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  history.push("/");
+                }}
+              />
+              <HeaderTxt1
+                onClick={() => {
+                  history.push("/shoppork");
+                }}
+              >
+                쇼핑하기
+              </HeaderTxt1>
+              <HeaderTxt1
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                배송안내
+              </HeaderTxt1>
+              <HeaderTxt1
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                이벤트
+              </HeaderTxt1>
+            </FlexBox1>
+            <FlexBox2>
+              <HeaderTxt2
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                공지사항
+              </HeaderTxt2>
+              <HeaderTxt2
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                고객센터
+              </HeaderTxt2>
+              <HeaderTxt2>|</HeaderTxt2>
+              <HeaderTxt2
+                onClick={() => {
+                  history.push("/login");
+                }}
+              >
+                장바구니
+              </HeaderTxt2>
+              <HeaderTxt2
+                onClick={() => {
+                  history.push("/signup");
+                }}
+              >
+                로그아웃
+              </HeaderTxt2>
+            </FlexBox2>
+          </HeaderBox>
+        </Container>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <React.Fragment>
+        <Container>
+          <HeaderBox>
+            <FlexBox1>
+              <img
+                src="image/hexaLogo.png"
+                style={{
+                  width: "140px",
+                  height: "59px",
+                  marginRight: "28px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  history.push("/");
+                }}
+              />
+              <HeaderTxt1
+                onClick={() => {
+                  history.push("/shoppork");
+                }}
+              >
+                쇼핑하기
+              </HeaderTxt1>
+              <HeaderTxt1
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                배송안내
+              </HeaderTxt1>
+              <HeaderTxt1
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                이벤트
+              </HeaderTxt1>
+            </FlexBox1>
+            <FlexBox2>
+              <HeaderTxt2
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                공지사항
+              </HeaderTxt2>
+              <HeaderTxt2
+                onClick={() => {
+                  window.alert("준비중인 서비스입니다!");
+                }}
+              >
+                고객센터
+              </HeaderTxt2>
+              <HeaderTxt2>|</HeaderTxt2>
+              <HeaderTxt2
+                onClick={() => {
+                  history.push("/login");
+                }}
+              >
+                로그인
+              </HeaderTxt2>
+              <HeaderTxt2
+                onClick={() => {
+                  history.push("/signup");
+                }}
+              >
+                회원가입
+              </HeaderTxt2>
+            </FlexBox2>
+          </HeaderBox>
+        </Container>
+      </React.Fragment>
+    );
+  }
 };
 
 const Container = styled.div`
