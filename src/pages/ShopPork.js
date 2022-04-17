@@ -54,7 +54,7 @@ const ShopPork = () => {
               {modalIsOpen ? (
                 <Modal
                   isOpen={modalIsOpen}
-                  riaHideApp={false}
+                  ariaHideApp={false}
                   onRequestClose={() => setModalIsOpen(false)}
                 >
                   This is Modal content hi{" "}
