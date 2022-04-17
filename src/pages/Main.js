@@ -54,6 +54,7 @@ const MainImg = styled.div`
   background-size: cover;
   cursor: pointer;
   margin: 6rem 0 0 0;
+  maxWidth="1184px"
 `;
 
 const SlideImg1 = styled.div`
