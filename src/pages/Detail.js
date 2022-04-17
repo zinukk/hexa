@@ -3,6 +3,7 @@ import Grid from "../elements/Grid";
 import Text from "../elements/Text";
 import Button from "../elements/Button";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 import styled from "styled-components";
 
@@ -109,6 +110,7 @@ const Detail = (props) => {
       <Text size="36px" text_align="center" bold>기</Text>
       <Text size="36px" text_align="center" bold>ㄴ</Text>
       <Text size="36px" text_align="center" bold>이미지가 들어가요!</Text>
+      <Footer/>
     </React.Fragment>
   );
 };

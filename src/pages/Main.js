@@ -5,6 +5,7 @@ import Post from "../components/Post";
 import Grid from "../elements/Grid";
 import Text from "../elements/Text";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 import mainimg from "../shared/img/mainimg.png";
 import slideimg1 from "../shared/img/slideimg1.png";
@@ -34,11 +35,14 @@ const Main = () => {
             정육각 베스트 상품
           </h5>
         </Grid>
-        <Post />
+        <Grid>
+          <Post />
+        </Grid>
       </Grid>
       <Grid padding="3rem 14rem 3rem 14rem">
         <BottomBanner />
       </Grid>
+      <Footer />
     </React.Fragment>
   );
 };
@@ -50,6 +54,7 @@ const MainImg = styled.div`
   background-size: cover;
   cursor: pointer;
   margin: 6rem 0 0 0;
+  maxWidth="1184px"
 `;
 
 const SlideImg1 = styled.div`
