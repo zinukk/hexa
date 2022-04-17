@@ -57,7 +57,7 @@ const ShopPork = () => {
                   ariaHideApp={false}
                   onRequestClose={() => setModalIsOpen(false)}
                 >
-                  This is Modal content hi{" "}
+                  This is Modal content history{" "}
                   <button
                     onClick={() => {
                       setModalIsOpen(false);
