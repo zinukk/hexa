@@ -41,7 +41,6 @@ const ShopPork = () => {
 
 const ImgBox = styled.div`
   width: 100%;
-  min-width: 1184px;
   height: 520px;
   background-image: url("https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-app/web/list_top/new/pcpork.png");
   background-size: cover;
