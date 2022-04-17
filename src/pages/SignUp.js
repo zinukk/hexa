@@ -21,6 +21,8 @@ const SignUp = () => {
   };
 
   const signup = () => {
+    console.log(values);
+
     const Signup_info = {
       username: values.id,
       password: values.password,
