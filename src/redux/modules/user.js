@@ -28,7 +28,7 @@ const loginDB = (Login_info) => {
         alert("로그인 성공");
         console.log(res);
         console.log(res.headers.authorization);
-        sessionStorage.setItem("JWT", res.headers.authorization);
+        sessionStorage.setItem("token", res.headers.authorization);
         dispatch(setLogin(Login_info));
         history.push("/");
       })
@@ -55,21 +55,21 @@ const signupDB = (Signup_info) => {
   };
 };
 
-const logoutDB = () => {
-  return function (dispatch, getState, { history }) {
-    apis
-      .logout()
-      .then((res) => {
-        //console.log(res)
-        sessionStorage.removeItem("JWT");
-        dispatch(setLogout());
-        history.push("/login");
-      })
-      .catch((e) => {
-        console.log("로그아웃 에러", e);
-      });
-  };
-};
+// const logoutDB = () => {
+//   return function (dispatch, getState, { history }) {
+//     apis
+//       .logout()
+//       .then((res) => {
+//         //console.log(res)
+//         sessionStorage.clear();
+//         dispatch(setLogout());
+//         history.push("/login");
+//       })
+//       .catch((err) => {
+//         console.log("로그아웃 에러", err.response);
+//       });
+//   };
+// };
 
 export default handleActions(
   {
@@ -77,10 +77,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user;
       }),
-    [LOGOUT]: (state, action) =>
-      produce(state, (draft) => {
-        sessionStorage.clear();
-      }),
+    // [LOGOUT]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     sessionStorage.clear();
+    //   }),
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
         draft.user = action.payload.user;
@@ -92,7 +92,8 @@ export default handleActions(
 const actionCreators = {
   signupDB,
   loginDB,
-  logoutDB,
+  // logoutDB,
+  setLogout,
 };
 
 export { actionCreators };

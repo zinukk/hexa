@@ -7,14 +7,15 @@ import { actionCreators as userActions } from "../redux/modules/user";
 const Header = () => {
   const dispatch = useDispatch();
 
-  const is_login = useSelector((store) => store?.user?.user?.status);
+  const token = sessionStorage.getItem("token");
 
-  const logout = () => {
-    console.log("로그아웃버튼");
-    dispatch(userActions.logoutDB());
+  const logout_click = () => {
+    sessionStorage.removeItem("token");
+    // dispatch(userActions.logoutDB());
+    history.replace("/");
   };
 
-  if (is_login == true) {
+  if (token) {
     return (
       <React.Fragment>
         <Container>
@@ -77,13 +78,7 @@ const Header = () => {
               >
                 장바구니
               </HeaderTxt2>
-              <HeaderTxt2
-                onClick={() => {
-                  history.push("/signup");
-                }}
-              >
-                로그아웃
-              </HeaderTxt2>
+              <HeaderTxt2 onClick={logout_click}>로그아웃</HeaderTxt2>
             </FlexBox2>
           </HeaderBox>
         </Container>
