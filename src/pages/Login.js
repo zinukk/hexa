@@ -40,11 +40,11 @@ const Login = () => {
   };
 
   // 토큰 체크
-  const is_token = sessionStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   // 토큰이 있다면, 바로 메인페이지로 이동하도록 실행
   useEffect(() => {
-    if (is_token) {
+    if (token) {
       history.replace("/");
     }
   }, []);
