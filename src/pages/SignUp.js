@@ -9,45 +9,57 @@ import { createActions as userActions } from "redux-actions";
 const SignUp = () => {
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [values, setValues] = useState({
+    username: "",
+    name: "",
+    password: "",
+    passwordCheck: "",
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const signup = () => {
+    const Signup_info = {
+      username: values.id,
+      password: values.password,
+      passwordCheck: values.passwordCheck,
+      name: values.name,
+    };
+
     if (
-      username === "" ||
-      name === "" ||
-      password === "" ||
-      passwordCheck === ""
+      values.username === "" ||
+      values.name === "" ||
+      values.password === "" ||
+      values.passwordCheck === ""
     ) {
       window.alert("아이디, 비밀번호, 이름을 모두 입력해주세요");
       return;
     }
-    if (!usernameCheck(username)) {
+    if (!usernameCheck(values.username)) {
       window.alert("아이디는 영문, 숫자로만 입력해주세요");
       return;
     }
-    if (!checkPassword(password)) {
+    if (!checkPassword(values.password)) {
       window.alert(
         "비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다"
       );
       return;
     }
-    if (!checkName(name)) {
+    if (!checkName(values.name)) {
       window.alert("이름은 2글자 이상 6글자 이하로 입력해주세요");
       return;
     }
-    if (password.includes(username)) {
+    if (values.password.includes(values.username)) {
       alert("비밀번호에 아이디가 포함되어 있습니다");
       return;
     }
-    if (password !== passwordCheck) {
+    if (values.password !== values.passwordCheck) {
       alert("비밀번호가 다릅니다.");
       return;
     }
-
-    dispatch(userActions.signupDB(username, password, passwordCheck, name));
+    dispatch(userActions.signupDB(Signup_info));
   };
 
   return (
@@ -66,9 +78,7 @@ const SignUp = () => {
               <LoginInput
                 type="text"
                 name="username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
+                onChange={handleChange("username")}
                 placeholder="아이디는 영문, 숫자로만 입력해주세요"
               />
             </ValueBox>
@@ -83,9 +93,7 @@ const SignUp = () => {
                 type="password"
                 name="password"
                 autoComplete="off"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                onChange={handleChange("password")}
                 placeholder="비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다"
               />
             </ValueBox>
@@ -100,9 +108,7 @@ const SignUp = () => {
                 type="password"
                 name="passwordCheck"
                 autoComplete="off"
-                onChange={(e) => {
-                  setPasswordCheck(e.target.value);
-                }}
+                onChange={handleChange("passwordCheck")}
                 placeholder="비밀번호를 다시 입력해주세요"
               />
             </ValueBox>
@@ -116,9 +122,7 @@ const SignUp = () => {
               <LoginInput
                 type="text"
                 name="nickname"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
+                onChange={handleChange("name")}
                 placeholder="이름은 2글자 이상 6글자 이하로 입력해주세요"
               />
             </ValueBox>
@@ -186,6 +190,7 @@ const BackButton = styled.button`
   color: white;
   background: gray;
   margin-top: 40px;
+  cursor: pointer;
 `;
 
 const SubmitButton = styled.button`
@@ -197,6 +202,7 @@ const SubmitButton = styled.button`
   color: white;
   background: black;
   margin-top: 40px;
+  cursor: pointer;
 `;
 
 const SignupText = styled.h1`
