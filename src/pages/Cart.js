@@ -129,12 +129,12 @@ const Cart = (props) => {
               >
                 {props.yesangfee}원
               </Text>
-              <Button margin="0rem 3rem 1rem 3rem" width="12rem" bg="#d0021b">
+              <Button margin="0rem 3rem 1rem 3rem" width="12rem" bg="#d0021b" border="none">
                 <Text color="white" size="15px" bold>
                   전체상품 주문하기
                 </Text>
               </Button>
-              <Button margin="0rem 3rem 2rem 3rem" width="12rem" bg="#acacac">
+              <Button margin="0rem 3rem 2rem 3rem" width="12rem" bg="#acacac" border="none">
                 <Text color="white" size="15px" bold>
                   쇼핑계속하기
                 </Text>

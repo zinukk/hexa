@@ -4,8 +4,10 @@ import Text from "../elements/Text";
 import Button from "../elements/Button";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Dropdown from "../components/Dropdown";
 
 import styled from "styled-components";
+import Quantity from "../components/Quantity";
 
 const Detail = (props) => {
   let stanPrice = props.price.split(",").join(""); // 기준가에서 , 빼기
@@ -13,11 +15,10 @@ const Detail = (props) => {
   console.log(stanPrice);
   const gramPrice = parseInt(stanPrice / props.serving) * 100; //g당 가격 계산
   return (
-    
-    <React.Fragment> 
-      <Header/>
-      <Grid bg="#1c1c1c" width="" height="" >
-        <Grid is_flex2 padding="96px 7rem 0rem 5rem" >
+    <React.Fragment>
+      <Header />
+      <Grid bg="#1c1c1c" width="" height="">
+        <Grid is_flex2 padding="96px 7rem 0rem 5rem">
           <Grid
             width="30rem"
             height="30rem"
@@ -43,14 +44,14 @@ const Detail = (props) => {
             </Text>
             <hr
               style={{
-                width: "22rem",
+                width: "23rem",
                 height: "0.1rem",
                 backgroundColor: "#4a4a4a",
                 marginTop: "2rem",
                 border: "0",
               }}
             />
-            <Grid height="2rem" margin="2.9rem 0 0 0">
+            <Grid is_flex height="2rem" margin="2.9rem 0 0 0">
               <Text
                 color="white"
                 is_float="left"
@@ -59,8 +60,11 @@ const Detail = (props) => {
               >
                 옵션
               </Text>
+              <Grid margin="0 0 2rem 0">
+                <Dropdown />
+              </Grid>
             </Grid>
-            <Grid height="2rem" margin="2.9rem 0 0 0">
+            <Grid is_flex height="2rem" margin="2.9rem 0 0 0">
               <Text
                 color="white"
                 is_float="left"
@@ -70,10 +74,13 @@ const Detail = (props) => {
               >
                 수량
               </Text>
+              <Grid margin="0 0 2rem 0">
+                <Quantity/>
+              </Grid>
             </Grid>
-            <Grid is_flex2 margin="4rem 0 0 0">
+            <Grid is_flex2 margin="4rem 0 0 2rem">
               <Button
-                width="30rem"
+                width="50rem"
                 height="4rem"
                 bg="#888888"
                 margin="0 2rem 0 0"
@@ -85,7 +92,7 @@ const Detail = (props) => {
                 </Text>
               </Button>
               <Button
-                width="30rem"
+                width="50rem"
                 height="4rem"
                 bg="#d0021b"
                 cursor="t"
@@ -100,17 +107,31 @@ const Detail = (props) => {
         </Grid>
       </Grid>
       <Grid width="5rem" margin="0 auto 2rem auto">
-        <Text size="18px" color="#000" bold text_align="center" margin="2rem 0 0 0">
+        <Text
+          size="18px"
+          color="#000"
+          bold
+          text_align="center"
+          margin="2rem 0 0 0"
+        >
           상품설명
         </Text>
         <hr />
       </Grid>
       <hr />
-      <Text size="36px" text_align="center" bold>여기에는</Text>
-      <Text size="36px" text_align="center" bold>기</Text>
-      <Text size="36px" text_align="center" bold>ㄴ</Text>
-      <Text size="36px" text_align="center" bold>이미지가 들어가요!</Text>
-      <Footer/>
+      <Text size="36px" text_align="center" bold>
+        여기에는
+      </Text>
+      <Text size="36px" text_align="center" bold>
+        기
+      </Text>
+      <Text size="36px" text_align="center" bold>
+        ㄴ
+      </Text>
+      <Text size="36px" text_align="center" bold>
+        이미지가 들어가요!
+      </Text>
+      <Footer />
     </React.Fragment>
   );
 };
