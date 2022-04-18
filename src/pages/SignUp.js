@@ -3,57 +3,80 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useDispatch } from "react-redux";
-import { usernameCheck, checkName, checkPassword } from "../shared/SignupCheck";
-import { createActions as userActions } from "redux-actions";
+import {
+  usernameCheck,
+  checkName,
+  checkPassword,
+  checkEmail,
+} from "../shared/SignupCheck";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const SignUp = () => {
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    name: "",
+    password: "",
+    passwordCheck: "",
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const signup = () => {
+    console.log(values);
+
+    const Signup_info = {
+      username: values.username,
+      email: values.email,
+      password: values.password,
+      passwordCheck: values.passwordCheck,
+      name: values.name,
+    };
+
     if (
-      username === "" ||
-      name === "" ||
-      password === "" ||
-      passwordCheck === ""
+      values.username === "" ||
+      values.name === "" ||
+      values.password === "" ||
+      values.passwordCheck === ""
     ) {
-      window.alert("아이디, 비밀번호, 이름을 모두 입력해주세요");
+      alert("아이디, 비밀번호, 이름을 모두 입력해주세요");
       return;
     }
-    if (!usernameCheck(username)) {
-      window.alert("아이디는 영문, 숫자로만 입력해주세요");
+    if (!usernameCheck(values.username)) {
+      alert("아이디는 영문, 숫자로만 입력해주세요");
       return;
     }
-    if (!checkPassword(password)) {
-      window.alert(
-        "비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다"
-      );
+    if (!checkEmail(values.email)) {
+      alert("이메일 형식이 아닙니다");
       return;
     }
-    if (!checkName(name)) {
-      window.alert("이름은 2글자 이상 6글자 이하로 입력해주세요");
+
+    if (!checkPassword(values.password)) {
+      alert("비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다");
       return;
     }
-    if (password.includes(username)) {
+    if (!checkName(values.name)) {
+      alert("이름은 2글자 이상 6글자 이하로 입력해주세요");
+      return;
+    }
+    if (values.password.includes(values.username)) {
       alert("비밀번호에 아이디가 포함되어 있습니다");
       return;
     }
-    if (password !== passwordCheck) {
+    if (values.password !== values.passwordCheck) {
       alert("비밀번호가 다릅니다.");
       return;
     }
-
-    dispatch(userActions.signupDB(username, password, passwordCheck, name));
+    dispatch(userActions.signupDB(Signup_info));
   };
 
   return (
     <React.Fragment>
       <Header />
-
       <Container>
         <SignupText>회원가입</SignupText>
         <p style={{ fontSize: "15px", marginBottom: "15px" }}>가입정보 입력</p>
@@ -66,9 +89,21 @@ const SignUp = () => {
               <LoginInput
                 type="text"
                 name="username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
+                onChange={handleChange("username")}
+                placeholder="아이디는 영문, 숫자로만 입력해주세요"
+              />
+            </ValueBox>
+          </FlexBox>
+
+          <FlexBox>
+            <KeyBox>
+              <KeyTxt>이메일</KeyTxt>
+            </KeyBox>
+            <ValueBox>
+              <LoginInput
+                type="text"
+                name="username"
+                onChange={handleChange("email")}
                 placeholder="아이디는 영문, 숫자로만 입력해주세요"
               />
             </ValueBox>
@@ -83,9 +118,7 @@ const SignUp = () => {
                 type="password"
                 name="password"
                 autoComplete="off"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                onChange={handleChange("password")}
                 placeholder="비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다"
               />
             </ValueBox>
@@ -100,9 +133,7 @@ const SignUp = () => {
                 type="password"
                 name="passwordCheck"
                 autoComplete="off"
-                onChange={(e) => {
-                  setPasswordCheck(e.target.value);
-                }}
+                onChange={handleChange("passwordCheck")}
                 placeholder="비밀번호를 다시 입력해주세요"
               />
             </ValueBox>
@@ -116,9 +147,7 @@ const SignUp = () => {
               <LoginInput
                 type="text"
                 name="nickname"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
+                onChange={handleChange("name")}
                 placeholder="이름은 2글자 이상 6글자 이하로 입력해주세요"
               />
             </ValueBox>
@@ -127,7 +156,6 @@ const SignUp = () => {
         <BackButton>이전으로</BackButton>
         <SubmitButton onClick={signup}>가입하기</SubmitButton>
       </Container>
-
       <Footer />
     </React.Fragment>
   );
@@ -135,7 +163,6 @@ const SignUp = () => {
 
 const Container = styled.div`
   width: 780px;
-  height: 400px;
   margin: 200px auto;
 `;
 
@@ -186,6 +213,7 @@ const BackButton = styled.button`
   color: white;
   background: gray;
   margin-top: 40px;
+  cursor: pointer;
 `;
 
 const SubmitButton = styled.button`
@@ -197,6 +225,7 @@ const SubmitButton = styled.button`
   color: white;
   background: black;
   margin-top: 40px;
+  cursor: pointer;
 `;
 
 const SignupText = styled.h1`

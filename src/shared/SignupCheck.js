@@ -6,11 +6,12 @@ export const usernameCheck = (username) => {
   // 대문자 포함
   return regExp.test(username);
 };
-//이메일 유효성 검사
-// export const checkEmail = (email) => {
-//     let regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; // /^(.+)@(.+)$/;
-//     return regEmail.test(email);
-//   };
+
+// 이메일 유효성 검사
+export const checkEmail = (email) => {
+  let regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; // /^(.+)@(.+)$/;
+  return regEmail.test(email);
+};
 
 // 사용자 이름 체크 2자-6자이하
 export const checkName = (name) => {
