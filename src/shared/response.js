@@ -63,5 +63,3 @@ export const RESP = {
     },
   ],
 };
-
-export const asd = { asd };

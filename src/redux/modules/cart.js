@@ -38,7 +38,7 @@ const deleteCartDB = (id) => {
             window.alert("삭제가 완료되었습니다.");
         })
         .catch(function (err) {
-            console.log(err);
+            console.log(err.response);
         })
     }
 }
