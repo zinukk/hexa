@@ -6,10 +6,23 @@ import Footer from "../components/Footer";
 import Modal from "react-modal";
 import { useState } from "react";
 import asd from "../shared/modal";
+import { useSelector } from "react-redux";
+import { RESP } from "../shared/response";
 
 const ShopPork = () => {
+  console.log(RESP);
+
+  const data = RESP.lists;
+
+  console.log(data[0].productType[1].zero);
+  console.log(data[0].option);
+
+  const post_list = useSelector((state) => state.post);
+  console.log(post_list);
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(16800);
 
   const quanCount = () => {
     setQuantity(quantity + 1);
@@ -49,7 +62,7 @@ const ShopPork = () => {
           </FoodButton>
         </ButtonBox>
         <CardBox>
-          <FoodCard>
+          {/* <FoodCard>
             <CardTopBox>
               <ZeroBox></ZeroBox>
               <CardImgBox>
@@ -89,7 +102,7 @@ const ShopPork = () => {
                     <OptionsBox>얇게(11mm)</OptionsBox>
                     <OptionsBox>두껍(24mm)</OptionsBox>
                   </SelectBox>
-                  <TotalPrice>16,800원</TotalPrice>
+                  <TotalPrice>{price * quantity}원</TotalPrice>
                   <BuyBtn
                     onClick={() => {
                       history.push("/cart");
@@ -109,7 +122,84 @@ const ShopPork = () => {
             </CardTopBox>
             <CardTitle>초신선 무항생제 돼지 삼겹살 수육용</CardTitle>
             <CardData>기준가 19,800원/600g</CardData>
-          </FoodCard>
+          </FoodCard> */}
+          {data.map((cur, idx) => (
+            <FoodCard key={cur.productId}>
+              <CardTopBox>
+                {cur.productType[1].zero === true ? (
+                  <ZeroBox></ZeroBox>
+                ) : (
+                  <NonZeroBox></NonZeroBox>
+                )}
+                <CardImgBox>
+                  <CardImg src={cur.image}></CardImg>
+                </CardImgBox>
+                <CartButton
+                  onClick={() => {
+                    setModalIsOpen(true);
+                  }}
+                />
+                {modalIsOpen ? (
+                  <Modal
+                    isOpen={modalIsOpen}
+                    ariaHideApp={false}
+                    onRequestClose={() => setModalIsOpen(false)}
+                    style={asd}
+                  >
+                    <div style={{ position: "relative" }}>
+                      <ModalText>{cur.name}</ModalText>
+                      <QuanBox>
+                        {quantity === 1 ? (
+                          <MinBox>
+                            <MinBut />
+                          </MinBox>
+                        ) : (
+                          <MinBox onClick={quanMinus}>
+                            <MinBut />
+                          </MinBox>
+                        )}
+                        <NumBox>{quantity}</NumBox>
+                        <PlusBox onClick={quanCount}>
+                          <PlusBut />
+                        </PlusBox>
+                      </QuanBox>
+                      <OptionsText>옵션선택</OptionsText>
+                      <SelectBox>
+                        {cur.option.map((cur, idx) => (
+                          <OptionsBox key={idx}>{cur.options}</OptionsBox>
+                        ))}
+                        {/* <OptionsBox>보통(16mm)</OptionsBox>
+                      <OptionsBox>얇게(11mm)</OptionsBox>
+                      <OptionsBox>두껍(24mm)</OptionsBox> */}
+                      </SelectBox>
+                      <TotalPrice>
+                        {(cur.price * quantity).toLocaleString()}원
+                      </TotalPrice>
+                      <BuyBtn
+                        onClick={() => {
+                          history.push("/cart");
+                        }}
+                      >
+                        바로구매
+                      </BuyBtn>
+                      <CartBtn
+                        onClick={() => {
+                          alert("장바구니에 추가되었습니다!");
+                        }}
+                      >
+                        장바구니
+                      </CartBtn>
+                    </div>
+                  </Modal>
+                ) : null}
+              </CardTopBox>
+              <CardTitle>{cur.name}</CardTitle>
+              <CardData>
+                기준가 {cur.price.toLocaleString()}원/
+                {cur.serving.toLocaleString()}
+              </CardData>
+            </FoodCard>
+          ))}
         </CardBox>
       </Container>
       <Footer />
@@ -177,6 +267,13 @@ const ZeroBox = styled.div`
   margin-left: 16px;
 `;
 
+const NonZeroBox = styled.div`
+  width: 75px;
+  height: 30px;
+  margin-top: 16px;
+  margin-left: 16px;
+`;
+
 const CardImgBox = styled.div`
   width: 208px;
   margin: 0 auto;
@@ -184,10 +281,9 @@ const CardImgBox = styled.div`
   cursor: pointer;
 `;
 
-const CardImg = styled.div`
+const CardImg = styled.img`
   width: 208px;
   height: 208px;
-  background-image: url("https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-seoul-app/frontend/thumbnails/transparent_background/porkbelly-clean-whole-list.png");
   background-size: cover;
   margin: 0 auto;
   border: none;

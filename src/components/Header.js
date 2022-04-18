@@ -12,7 +12,7 @@ const Header = () => {
   const logout_click = () => {
     sessionStorage.removeItem("token");
     // dispatch(userActions.logoutDB());
-    history.replace("/");
+    history.replace("/login");
   };
 
   if (token) {

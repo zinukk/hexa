@@ -11,8 +11,16 @@ import { Route, Router } from "react-router-dom";
 import React from "react";
 import { history } from "./redux/configStore";
 import { ConnectedRouter } from "connected-react-router";
+import { useDispatch } from "react-redux";
+import { actionCreators as shopActions } from "./redux/modules/shop";
 
 function App() {
+  const dispatch = useDispatch();
+
+  // React.useEffect(() => {
+  //   dispatch(shopActions.getpostDB());
+  // });
+
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>

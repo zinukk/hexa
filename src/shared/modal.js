@@ -2,11 +2,12 @@
 const asd = {
   overlay: {
     position: "fixed",
+    // position: "relative",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(255, 255, 255, 0.45)",
+    backgroundColor: "rgba(255, 255, 255, 0)",
     zIndex: 10,
   },
   content: {
