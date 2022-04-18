@@ -3,14 +3,20 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useDispatch } from "react-redux";
-import { usernameCheck, checkName, checkPassword } from "../shared/SignupCheck";
-import { createActions as userActions } from "redux-actions";
+import {
+  usernameCheck,
+  checkName,
+  checkPassword,
+  checkEmail,
+} from "../shared/SignupCheck";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const SignUp = () => {
   const dispatch = useDispatch();
 
   const [values, setValues] = useState({
     username: "",
+    email: "",
     name: "",
     password: "",
     passwordCheck: "",
@@ -21,8 +27,11 @@ const SignUp = () => {
   };
 
   const signup = () => {
+    console.log(values);
+
     const Signup_info = {
-      username: values.id,
+      username: values.username,
+      email: values.email,
       password: values.password,
       passwordCheck: values.passwordCheck,
       name: values.name,
@@ -34,21 +43,24 @@ const SignUp = () => {
       values.password === "" ||
       values.passwordCheck === ""
     ) {
-      window.alert("아이디, 비밀번호, 이름을 모두 입력해주세요");
+      alert("아이디, 비밀번호, 이름을 모두 입력해주세요");
       return;
     }
     if (!usernameCheck(values.username)) {
-      window.alert("아이디는 영문, 숫자로만 입력해주세요");
+      alert("아이디는 영문, 숫자로만 입력해주세요");
       return;
     }
+    if (!checkEmail(values.email)) {
+      alert("이메일 형식이 아닙니다");
+      return;
+    }
+
     if (!checkPassword(values.password)) {
-      window.alert(
-        "비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다"
-      );
+      alert("비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다");
       return;
     }
     if (!checkName(values.name)) {
-      window.alert("이름은 2글자 이상 6글자 이하로 입력해주세요");
+      alert("이름은 2글자 이상 6글자 이하로 입력해주세요");
       return;
     }
     if (values.password.includes(values.username)) {
@@ -65,7 +77,6 @@ const SignUp = () => {
   return (
     <React.Fragment>
       <Header />
-
       <Container>
         <SignupText>회원가입</SignupText>
         <p style={{ fontSize: "15px", marginBottom: "15px" }}>가입정보 입력</p>
@@ -79,6 +90,20 @@ const SignUp = () => {
                 type="text"
                 name="username"
                 onChange={handleChange("username")}
+                placeholder="아이디는 영문, 숫자로만 입력해주세요"
+              />
+            </ValueBox>
+          </FlexBox>
+
+          <FlexBox>
+            <KeyBox>
+              <KeyTxt>이메일</KeyTxt>
+            </KeyBox>
+            <ValueBox>
+              <LoginInput
+                type="text"
+                name="username"
+                onChange={handleChange("email")}
                 placeholder="아이디는 영문, 숫자로만 입력해주세요"
               />
             </ValueBox>
@@ -131,7 +156,6 @@ const SignUp = () => {
         <BackButton>이전으로</BackButton>
         <SubmitButton onClick={signup}>가입하기</SubmitButton>
       </Container>
-
       <Footer />
     </React.Fragment>
   );
@@ -139,7 +163,6 @@ const SignUp = () => {
 
 const Container = styled.div`
   width: 780px;
-  height: 400px;
   margin: 200px auto;
 `;
 

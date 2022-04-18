@@ -23,7 +23,7 @@ const initialState = {};
 const loginDB = (Login_info) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post("", Login_info)
+      .post(`http://3.39.23.124:8080/user/login`, Login_info)
       .then((res) => {
         alert("로그인 성공");
         console.log(res);
@@ -43,7 +43,13 @@ const loginDB = (Login_info) => {
 const signupDB = (Signup_info) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post("", Signup_info)
+      .post("http://3.39.23.124:8080/user/signup", Signup_info, {
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          accept: "application/json,",
+          // Authorization: token,
+        },
+      })
       .then((res) => {
         alert("가입이 완료되었습니다");
         history.replace("/login");

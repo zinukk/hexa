@@ -5,16 +5,38 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Modal from "react-modal";
 import { useState } from "react";
+import asd from "../shared/modal";
+import { useSelector } from "react-redux";
+import { RESP } from "../shared/response";
 
 const ShopPork = () => {
+  console.log(RESP);
+
+  const data = RESP.lists;
+
+  console.log(data[0].productType[1].zero);
+  console.log(data[0].option);
+
+  const post_list = useSelector((state) => state.post);
+  console.log(post_list);
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(16800);
+
+  const quanCount = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const quanMinus = () => {
+    setQuantity(quantity - 1);
+  };
 
   return (
     <React.Fragment>
-      {/* <Header /> */}
+      <Header />
       <Container>
         <ImgBox />
-        {/* <Modal isOpen={true}>This is Modal content</Modal> */}
         <ButtonBox>
           <FoodButton
             onClick={() => {
@@ -40,7 +62,7 @@ const ShopPork = () => {
           </FoodButton>
         </ButtonBox>
         <CardBox>
-          <FoodCard>
+          {/* <FoodCard>
             <CardTopBox>
               <ZeroBox></ZeroBox>
               <CardImgBox>
@@ -56,54 +78,128 @@ const ShopPork = () => {
                   isOpen={modalIsOpen}
                   ariaHideApp={false}
                   onRequestClose={() => setModalIsOpen(false)}
+                  style={asd}
                 >
-                  This is Modal content hi{" "}
-                  <button
+                  <ModalText>초신선 무항생제 돼지 삼겹살 수육용</ModalText>
+                  <QuanBox>
+                    {quantity === 1 ? (
+                      <MinBox>
+                        <MinBut />
+                      </MinBox>
+                    ) : (
+                      <MinBox onClick={quanMinus}>
+                        <MinBut />
+                      </MinBox>
+                    )}
+                    <NumBox>{quantity}</NumBox>
+                    <PlusBox onClick={quanCount}>
+                      <PlusBut />
+                    </PlusBox>
+                  </QuanBox>
+                  <OptionsText>옵션선택</OptionsText>
+                  <SelectBox>
+                    <OptionsBox>보통(16mm)</OptionsBox>
+                    <OptionsBox>얇게(11mm)</OptionsBox>
+                    <OptionsBox>두껍(24mm)</OptionsBox>
+                  </SelectBox>
+                  <TotalPrice>{price * quantity}원</TotalPrice>
+                  <BuyBtn
                     onClick={() => {
-                      setModalIsOpen(false);
+                      history.push("/cart");
                     }}
                   >
-                    닫기
-                  </button>
+                    바로구매
+                  </BuyBtn>
+                  <CartBtn
+                    onClick={() => {
+                      alert("장바구니에 추가되었습니다!");
+                    }}
+                  >
+                    장바구니
+                  </CartBtn>
                 </Modal>
               ) : null}
             </CardTopBox>
             <CardTitle>초신선 무항생제 돼지 삼겹살 수육용</CardTitle>
             <CardData>기준가 19,800원/600g</CardData>
-          </FoodCard>
-          {/* <FoodCard>
-            <CardTopBox>
-              <ZeroBox></ZeroBox>
-              <CardImgBox>
-                <CardImg></CardImg>
-              </CardImgBox>
-              <CartButton></CartButton>
-            </CardTopBox>
-            <CardTitle>초신선 무항생제 돼지 삼겹살 수육용</CardTitle>
-            <CardData>기준가 19,800원/600g</CardData>
-          </FoodCard>{" "}
-          <FoodCard>
-            <CardTopBox>
-              <ZeroBox></ZeroBox>
-              <CardImgBox>
-                <CardImg></CardImg>
-              </CardImgBox>
-              <CartButton></CartButton>
-            </CardTopBox>
-            <CardTitle>초신선 무항생제 돼지 삼겹살 수육용</CardTitle>
-            <CardData>기준가 19,800원/600g</CardData>
-          </FoodCard>{" "}
-          <FoodCard>
-            <CardTopBox>
-              <ZeroBox></ZeroBox>
-              <CardImgBox>
-                <CardImg></CardImg>
-              </CardImgBox>
-              <CartButton></CartButton>
-            </CardTopBox>
-            <CardTitle>초신선 무항생제 돼지 삼겹살 수육용</CardTitle>
-            <CardData>기준가 19,800원/600g</CardData>
           </FoodCard> */}
+          {data.map((cur, idx) => (
+            <FoodCard key={cur.productId}>
+              <CardTopBox>
+                {cur.productType[1].zero === true ? (
+                  <ZeroBox></ZeroBox>
+                ) : (
+                  <NonZeroBox></NonZeroBox>
+                )}
+                <CardImgBox>
+                  <CardImg src={cur.image}></CardImg>
+                </CardImgBox>
+                <CartButton
+                  onClick={() => {
+                    setModalIsOpen(true);
+                  }}
+                />
+                {modalIsOpen ? (
+                  <Modal
+                    isOpen={modalIsOpen}
+                    ariaHideApp={false}
+                    onRequestClose={() => setModalIsOpen(false)}
+                    style={asd}
+                  >
+                    <div style={{ position: "relative" }}>
+                      <ModalText>{cur.name}</ModalText>
+                      <QuanBox>
+                        {quantity === 1 ? (
+                          <MinBox>
+                            <MinBut />
+                          </MinBox>
+                        ) : (
+                          <MinBox onClick={quanMinus}>
+                            <MinBut />
+                          </MinBox>
+                        )}
+                        <NumBox>{quantity}</NumBox>
+                        <PlusBox onClick={quanCount}>
+                          <PlusBut />
+                        </PlusBox>
+                      </QuanBox>
+                      <OptionsText>옵션선택</OptionsText>
+                      <SelectBox>
+                        {cur.option.map((cur, idx) => (
+                          <OptionsBox key={idx}>{cur.options}</OptionsBox>
+                        ))}
+                        {/* <OptionsBox>보통(16mm)</OptionsBox>
+                      <OptionsBox>얇게(11mm)</OptionsBox>
+                      <OptionsBox>두껍(24mm)</OptionsBox> */}
+                      </SelectBox>
+                      <TotalPrice>
+                        {(cur.price * quantity).toLocaleString()}원
+                      </TotalPrice>
+                      <BuyBtn
+                        onClick={() => {
+                          history.push("/cart");
+                        }}
+                      >
+                        바로구매
+                      </BuyBtn>
+                      <CartBtn
+                        onClick={() => {
+                          alert("장바구니에 추가되었습니다!");
+                        }}
+                      >
+                        장바구니
+                      </CartBtn>
+                    </div>
+                  </Modal>
+                ) : null}
+              </CardTopBox>
+              <CardTitle>{cur.name}</CardTitle>
+              <CardData>
+                기준가 {cur.price.toLocaleString()}원/
+                {cur.serving.toLocaleString()}
+              </CardData>
+            </FoodCard>
+          ))}
         </CardBox>
       </Container>
       <Footer />
@@ -171,6 +267,13 @@ const ZeroBox = styled.div`
   margin-left: 16px;
 `;
 
+const NonZeroBox = styled.div`
+  width: 75px;
+  height: 30px;
+  margin-top: 16px;
+  margin-left: 16px;
+`;
+
 const CardImgBox = styled.div`
   width: 208px;
   margin: 0 auto;
@@ -178,10 +281,9 @@ const CardImgBox = styled.div`
   cursor: pointer;
 `;
 
-const CardImg = styled.div`
+const CardImg = styled.img`
   width: 208px;
   height: 208px;
-  background-image: url("https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-seoul-app/frontend/thumbnails/transparent_background/porkbelly-clean-whole-list.png");
   background-size: cover;
   margin: 0 auto;
   border: none;
@@ -216,6 +318,139 @@ const CardData = styled.p`
   color: #9b9b9b;
   cursor: pointer;
   margin-top: 5px;
+`;
+
+const ModalEscbt = styled.button`
+  width: 40px;
+  height: 40px;
+  border: none;
+  position: ablsolute;
+  top: -10px;
+`;
+
+const ModalText = styled.p`
+  margin-top: 40px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+const BuyBtn = styled.button`
+  width: 50%;
+  height: 60px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  float: left;
+  cursor: pointer;
+  background-color: #acacac;
+`;
+
+const CartBtn = styled.button`
+  width: 50%;
+  height: 60px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  float: left;
+  cursor: pointer;
+  background-color: black;
+`;
+
+const QuanBox = styled.div`
+  display: flex;
+  width: 398px;
+  height: 50px;
+  margin: 0 auto;
+  margin-top: 55px;
+  border: 1px solid #e1dedf;
+`;
+
+const MinBox = styled.div`
+  width: 50px;
+  height: 50px;
+  padding: 22px 14px;
+  cursor: pointer;
+`;
+
+const MinBut = styled.div`
+  width: 21px;
+  height: 3px;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IuugiOydtOyWtF8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiCgkgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTIgMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTIgMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOm5vbmU7c3Ryb2tlOiM5QjlCOUI7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEwO30KPC9zdHlsZT4KPGc+Cgk8Zz4KCQk8bGluZSBjbGFzcz0ic3QwIiB4MT0iMSIgeTE9IjEiIHgyPSIxMSIgeTI9IjEiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K");
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  background-position: center center;
+`;
+
+const PlusBox = styled.div`
+  width: 50px;
+  height: 50px;
+  padding: 16px 16px;
+  cursor: pointer;
+`;
+
+const PlusBut = styled.div`
+  width: 18px;
+  height: 18px;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IuugiOydtOyWtF8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiCgkgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTIgMTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDEyIDEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6bm9uZTtzdHJva2U6IzlCOUI5QjtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7fQo8L3N0eWxlPgo8Zz4KCTxsaW5lIGNsYXNzPSJzdDAiIHgxPSI2IiB5MT0iMSIgeDI9IjYiIHkyPSIxMSIvPgoJPGxpbmUgY2xhc3M9InN0MCIgeDE9IjEiIHkxPSI2IiB4Mj0iMTEiIHkyPSI2Ii8+CjwvZz4KPC9zdmc+Cg==");
+  background-repeat: no-repeat;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  background-position: center center;
+`;
+
+const NumBox = styled.div`
+  width: 298px;
+  height: 50px;
+  line-height: 48px;
+  font-size: 18px;
+  border-left: 1px solid #e1dedf;
+  border-right: 1px solid #e1dedf;
+  padding-left: 143px;
+`;
+
+const OptionsText = styled.p`
+  margin-left: 51px;
+  margin-top: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  font-size: 16px;
+`;
+
+const SelectBox = styled.select`
+  width: 398px;
+  height: 50px;
+  font-size: 18px;
+  line-height: 1.33;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #e1dedf;
+  margin-left: 50px;
+  margin-top: 5px;
+`;
+
+const OptionsBox = styled.option`
+  width: 398px;
+  height: 50px;
+  font-size: 18px;
+  line-height: 1.33;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #e1dedf;
+  text-align: center;
+`;
+
+const TotalPrice = styled.p`
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 350px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 export default ShopPork;
