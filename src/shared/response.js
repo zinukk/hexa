@@ -64,4 +64,4 @@ export const RESP = {
   ],
 };
 
-export const asd = {};
+export const asd = { asd };
