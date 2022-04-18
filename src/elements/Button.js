@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { text, bg, _onClick, children, margin, width, height, padding, cursor } = props;
+  const { text, bg, _onClick, children, margin, width, height, padding, cursor, border } = props;
 
 
   const styles = {
@@ -12,6 +12,7 @@ const Button = (props) => {
     padding: padding,
     bg: bg,
     cursor: cursor,
+    border: border,
   };
 
   return (
@@ -34,6 +35,7 @@ Button.defaultProps = {
   padding: "12px 0px",
   bg: "",
   cursor: "",
+  border: "",
 };
 
 const ElButton = styled.button`
@@ -43,7 +45,7 @@ const ElButton = styled.button`
   color: #ffffff;
   padding: 12px 0px;
   box-sizing: border-box;
-  border: none;
+  ${(props) => (props.border ? `border: ${props.border};` : "")};
   padding: ${(props) => props.padding};
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")};

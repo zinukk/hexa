@@ -24,7 +24,7 @@ const Main = () => {
           <SlideImg1 />
           <FreshPlan />
         </Grid>
-        <Grid margin="auto auto auto 80px">
+        <Grid margin="auto auto auto 8rem">
           <h5
             style={{
               fontWeight: "600",
@@ -35,7 +35,9 @@ const Main = () => {
             정육각 베스트 상품
           </h5>
         </Grid>
-        <Grid>
+        <Grid is_flex2 wrap="true">
+          <Post />
+          <Post />
           <Post />
         </Grid>
       </Grid>
