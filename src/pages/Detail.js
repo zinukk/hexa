@@ -9,8 +9,32 @@ import Dropdown from "../components/Dropdown";
 import styled from "styled-components";
 import Quantity from "../components/Quantity";
 
+import { useDispatch, useSelector } from "react-redux";
+import {actionCreators as cartActions} from "../redux/modules/cart";
+import { actionCreators as postActions}  from "../redux/modules/post";
+import { history } from "../redux/configStore";
+
 const Detail = (props) => {
+  const dispatch = useDispatch();
+
+  console.log(props);
+
+  const id = props.match.params.id;
+  const post_list = useSelector((state) => state?.post.list);
+  const post_idx = post_list.findIndex((p) => p.id);
+  const post = post_list[post_idx];
+
+  console.log(post_list);
+
   let stanPrice = props.price.split(",").join(""); // 기준가에서 , 빼기
+
+  const addCart = () => {
+    dispatch(cartActions.addItemDB(post.productId));
+  };
+
+  React.useEffect(() => {
+    dispatch(postActions.getPostDB());
+  },[]);
 
   console.log(stanPrice);
   const gramPrice = parseInt(stanPrice / props.serving) * 100; //g당 가격 계산
@@ -75,7 +99,7 @@ const Detail = (props) => {
                 수량
               </Text>
               <Grid margin="0 0 2rem 0">
-                <Quantity/>
+                <Quantity />
               </Grid>
             </Grid>
             <Grid is_flex2 margin="4rem 0 0 2rem">
@@ -97,6 +121,7 @@ const Detail = (props) => {
                 bg="#d0021b"
                 cursor="t"
                 border="none"
+                _onClick={addCart}
               >
                 <Text color="white" size="16px" bold>
                   장바구니
