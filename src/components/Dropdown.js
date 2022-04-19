@@ -44,8 +44,8 @@ const Dropdown = (props) => {
         )}
       </DropdownBody>
       <DropdownMenu isActive={isActive}>
-        {dropdownItems.map((item) => (
-          <DropdownItemContainer id="item" key={item.id} onClick={onSelectItem}>
+        {dropdownItems.map((item, idx) => (
+          <DropdownItemContainer id="item" key={idx} onClick={onSelectItem}>
             <ItemName id="item_name">{item}</ItemName>
           </DropdownItemContainer>
         ))}

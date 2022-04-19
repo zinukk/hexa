@@ -13,6 +13,7 @@ import { history } from "./redux/configStore";
 import { ConnectedRouter } from "connected-react-router";
 import { useDispatch } from "react-redux";
 import { actionCreators as shopActions } from "./redux/modules/shop";
+import CartList from "./components/CartList";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function App() {
         <Route path="/" exact component={Main} />
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={SignUp} />
-        <Route path="/detail" exact component={Detail} />
+        <Route path="/detail/" exact component={Detail} />
         <Route path="/shopchick" exact component={ShopChick} />
         <Route path="/shoppork" exact component={ShopPork} />
         <Route path="/shopbeef" exact component={ShopBeef} />
