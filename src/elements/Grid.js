@@ -37,6 +37,7 @@ const Grid = (props) => {
     is_border,
     text_align,
     updownborder,
+    cursor,
   } = props;
 
   const styles = {
@@ -72,6 +73,7 @@ const Grid = (props) => {
     is_border: is_border,
     text_align: text_align,
     updownborder: updownborder,
+    cursor: cursor,
   };
 
   return (
@@ -119,6 +121,7 @@ Grid.defaultProps = {
   is_border: "",
   text_align: "",
   updownborder: "",
+  cursor: "",
 };
 
 const GridBox = styled.div`
@@ -147,9 +150,7 @@ const GridBox = styled.div`
       ? `display: flex; align-items: center; justify-content: center;`
       : ""}
   ${(props) =>
-    props.is_flex3
-      ? `display: flex; justify-content: center;`
-      : ""}
+    props.is_flex3 ? `display: flex; justify-content: center;` : ""}
   ${(props) => (props.position ? `position: ${props.position};` : "")}
   ${(props) => (props.top ? `top: ${props.top};` : "")}
   ${(props) => (props.left ? `left: ${props.left};` : "")}
@@ -181,6 +182,7 @@ const GridBox = styled.div`
         ? `display: flex; align-items: center; justify-content: center;`
         : ""}
   }
+  ${(props) => (props.cursor ? `cursor: pointer;` : "")};
 `;
 
 export default Grid;

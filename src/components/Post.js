@@ -25,6 +25,7 @@ const Post = (props) => {
           height="27rem"
           bg="#F9F7F8"
           margin="1rem 0 0rem 3rem"
+          cursor="t"
           _onClick={() => {
             history.push(`/detail`);
           }}

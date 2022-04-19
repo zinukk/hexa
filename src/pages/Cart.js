@@ -3,12 +3,35 @@ import styled from "styled-components";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import CartList from "../components/CartList";
 
 import Text from "../elements/Text";
 import Grid from "../elements/Grid";
 import Button from "../elements/Button";
 
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as cartActions } from "../redux/modules/cart";
+import { history } from "../redux/configStore";
+
 const Cart = (props) => {
+  const dispatch = useDispatch();
+
+  const product_list = useSelector((state) => state?.cart.list);
+  console.log(props);
+
+  const order = () => {
+    // const order_confirm = window.alert("주문을 하시려구요?");
+    // if (order_confirm) {
+      dispatch(cartActions.deleteCartDB());
+      window.alert("주문완료! 다음에 또 봬요~~");
+    // }
+  };
+
+  React.useEffect(() => {
+    console.log(product_list);
+    dispatch(cartActions.getCartDB());
+  }, []);
+
   return (
     <React.Fragment>
       <Header />
@@ -18,40 +41,41 @@ const Cart = (props) => {
         </Text>
       </Grid>
       <Div>
-        <div>
-          <Grid margin="0 0 25rem 0">
-            <hr
-              style={{
-                width: "55rem",
-                height: "0.06rem",
-                backgroundColor: "#4a4a4a",
-                marginTop: "2rem",
-                border: "0",
-              }}
-            />
-            <Grid is_flex width="100px" height="55px">
-              <Text margin="0 0 0 15rem" size="13px" bold>
-                상품정보
-              </Text>
-              <Text margin="0 0rem 0 18rem" size="13px" bold>
-                수량
-              </Text>
-              <Text margin="0 0rem 0 10rem" size="13px" bold>
-                가격
-              </Text>
-            </Grid>
-            <hr
-              style={{
-                width: "55rem",
-                height: "0.1rem",
-                backgroundColor: "#e1dedf",
-                marginTop: "0.5rem",
-                border: "0",
-              }}
-            />
+        <div style={{ margin: "0 0 55rem 8rem" }}>
+          <hr
+            style={{
+              width: "61rem",
+              height: "0.06rem",
+              backgroundColor: "#4a4a4a",
+              marginTop: "2rem",
+              border: "0",
+            }}
+          />
+          <Grid is_flex width="100px" height="55px">
+            <Text margin="0 0 0 15rem" size="13px" bold>
+              상품정보
+            </Text>
+            <Text margin="0 0rem 0 18rem" size="13px" bold>
+              수량
+            </Text>
+            <Text margin="0 0rem 0 10rem" size="13px" bold>
+              가격
+            </Text>
           </Grid>
+          <hr
+            style={{
+              width: "61rem",
+              height: "0.1rem",
+              backgroundColor: "#e1dedf",
+              marginTop: "0.5rem",
+              border: "0",
+            }}
+          />
+          {product_list.map((p, idx) => {
+            return <CartList {...p} key={p.productId} />;
+          })}
         </div>
-        <div>
+        <div style={{ margin: "0 0 44.5rem 0" }}>
           <Grid margin="0 0 0 2rem" width="280px" bg="#f8f8f8">
             <hr
               style={{
@@ -129,12 +153,28 @@ const Cart = (props) => {
               >
                 {props.yesangfee}원
               </Text>
-              <Button margin="0rem 3rem 1rem 3rem" width="12rem" bg="#d0021b" border="none">
-                <Text color="white" size="15px" bold>
+              <Button
+                margin="0rem 3rem 1rem 3rem"
+                width="12rem"
+                bg="#d0021b"
+                border="none"
+                cursor="t"
+                _onClick={order}
+              >
+                <Text color="white" size="15px" bold> 
                   전체상품 주문하기
                 </Text>
               </Button>
-              <Button margin="0rem 3rem 2rem 3rem" width="12rem" bg="#acacac" border="none">
+              <Button
+                margin="0rem 3rem 2rem 3rem"
+                width="12rem"
+                bg="#acacac"
+                border="none"
+                cursor="t"
+                _onClick={() => {
+                  history.push(`/`);
+                }}
+              >
                 <Text color="white" size="15px" bold>
                   쇼핑계속하기
                 </Text>
@@ -159,6 +199,6 @@ const Div = styled.div`
   display: flex;
   align-items: center;
   width: fit-content;
-  margin: auto;
+  height: auto;
 `;
 export default Cart;
