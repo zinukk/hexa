@@ -12,14 +12,14 @@ import React from "react";
 import { history } from "./redux/configStore";
 import { ConnectedRouter } from "connected-react-router";
 import { useDispatch } from "react-redux";
-import { actionCreators as shopActions } from "./redux/modules/shop";
+import { actionCreators as shopActions } from "./redux/modules/post";
 
 function App() {
   const dispatch = useDispatch();
 
-  // React.useEffect(() => {
-  //   dispatch(shopActions.getpostDB());
-  // });
+  React.useEffect(() => {
+    dispatch(shopActions.getpostDB());
+  });
 
   return (
     <React.Fragment>
@@ -28,6 +28,7 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={SignUp} />
         <Route path="/detail" exact component={Detail} />
+        <Route path="/detail/:productId" exact component={Detail} />
         <Route path="/shopchick" exact component={ShopChick} />
         <Route path="/shoppork" exact component={ShopPork} />
         <Route path="/shopbeef" exact component={ShopBeef} />

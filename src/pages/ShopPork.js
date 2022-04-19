@@ -243,13 +243,14 @@ const CardBox = styled.div`
   margin: 72px auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-row-gap: 5em;
+  grid-row-gap: 4em;
 `;
 
 const FoodCard = styled.div`
   width: 376px;
   height: 483px;
   margin: 0px auto;
+  position: relative;
 `;
 
 const CardTopBox = styled.div`
@@ -275,15 +276,15 @@ const NonZeroBox = styled.div`
 `;
 
 const CardImgBox = styled.div`
-  width: 208px;
+  width: 276px;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 25px;
   cursor: pointer;
 `;
 
 const CardImg = styled.img`
-  width: 208px;
-  height: 208px;
+  width: 276px;
+  height: 276px;
   background-size: cover;
   margin: 0 auto;
   border: none;
@@ -297,7 +298,8 @@ const CartButton = styled.div`
   border: 2px solid #eee;
   border-radius: 50%;
   background-color: #fff;
-  bottom: 16px;
+  position: absolute;
+  bottom: 80px;
   margin-left: 288px;
   margin-top: 20px;
   display: block;

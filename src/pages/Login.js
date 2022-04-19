@@ -19,7 +19,6 @@ const Login = () => {
   };
 
   const login_click = () => {
-    console.log(values);
 
     const Login_info = {
       username: values.username,
@@ -36,7 +35,9 @@ const Login = () => {
     }
     console.log("성공");
 
-    dispatch(userActions.loginDB(Login_info));
+    console.log(Login_info);
+
+    // dispatch(userActions.loginDB(Login_info));
   };
 
   // 토큰 체크

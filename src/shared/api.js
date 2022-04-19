@@ -39,7 +39,7 @@ export const setClient = (token) => {
 
 // export default instance;
 const api = axios.create({
-  baseURL: "",
+  baseURL: "http://3.39.23.124:8080",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json,",
