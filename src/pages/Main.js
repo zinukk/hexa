@@ -187,7 +187,7 @@ const Main = () => {
                         order();
                       }}
                     >
-                      장바구니
+                      장바구니.
                     </CartBtn>
                   </Modal>
                 ) : null}
