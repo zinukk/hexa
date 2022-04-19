@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "../elements/Grid";
 import Text from "../elements/Text";
 import Button from "../elements/Button";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Dropdown from "../components/Dropdown";
+import { useSelector, useDispatch } from "react-redux";
 
 import styled from "styled-components";
 import Quantity from "../components/Quantity";
 
-import { useDispatch, useSelector } from "react-redux";
 import {actionCreators as cartActions} from "../redux/modules/cart";
 import { actionCreators as postActions}  from "../redux/modules/post";
 import { history } from "../redux/configStore";
@@ -25,6 +25,11 @@ const Detail = (props) => {
   const post = post_list[post_idx];
 
   console.log(post_list);
+  const pId = props.match.params.productId;
+
+  console.log(pId);
+
+  useEffect(() => {});
 
   let stanPrice = props.price.split(",").join(""); // 기준가에서 , 빼기
 
@@ -38,6 +43,7 @@ const Detail = (props) => {
 
   console.log(stanPrice);
   const gramPrice = parseInt(stanPrice / props.serving) * 100; //g당 가격 계산
+
   return (
     <React.Fragment>
       <Header />

@@ -27,7 +27,7 @@ const Dropdown = (props) => {
 
     setIsActive((prev) => !prev);
   }, []);
-
+  console.log(item);
   return (
     <DropdownContainer>
       <DropdownBody onClick={onActiveToggle}>
