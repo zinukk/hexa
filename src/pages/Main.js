@@ -33,10 +33,34 @@ const Main = () => {
   const [foodOp, setFoodOp] = useState([]);
   const [price, setPrice] = useState("");
   const [opt, setOpt] = useState("");
+  const [isActive, setIsActive] = useState(false);
+
+  const onActiveToggle = useCallback(() => {
+    setIsActive((prev) => !prev);
+  }, []);
+
+  const onSelectItem = useCallback((e) => {
+    const targetId = e.target.id;
+
+    if (targetId === "item_name") {
+      setOpt(e.target.parentElement.innerText);
+    } else if (targetId === "item") {
+      setOpt(e.target.innerText);
+    }
+
+    setIsActive((prev) => !prev);
+  }, []);
+  console.log(opt);
 
   const order = () => {
-    // dispatch(postActions.sendpostDB());
-    console.log(quantity, foodId, opt);
+    const Order_info = {
+      productId: foodId,
+      option: opt,
+      quantity: quantity,
+    };
+
+    dispatch(postActions.sendpostDB(Order_info));
+    console.log(Order_info);
   };
 
   const quanCount = () => {
@@ -85,6 +109,8 @@ const Main = () => {
                     setPrice(cur.price);
                     setFoodId(cur.productId);
                     setFoodOp(cur.option);
+                    setOpt(cur.option[0].options);
+                    console.log(opt);
                   }}
                 />
                 {modalIsOpen ? (
@@ -97,49 +123,72 @@ const Main = () => {
                     }}
                     style={asd}
                   >
-                    <div style={{ position: "relative" }}>
-                      <ModalText>{foodName}</ModalText>
-                      <QuanBox>
-                        {quantity === 1 ? (
-                          <MinBox>
-                            <MinBut />
-                          </MinBox>
+                    <ModalText>{foodName}</ModalText>
+                    <QuanBox>
+                      {quantity === 1 ? (
+                        <MinBox>
+                          <MinBut />
+                        </MinBox>
+                      ) : (
+                        <MinBox onClick={quanMinus}>
+                          <MinBut />
+                        </MinBox>
+                      )}
+                      <NumBox>{quantity}</NumBox>
+                      <PlusBox onClick={quanCount}>
+                        <PlusBut />
+                      </PlusBox>
+                    </QuanBox>
+                    <OptionsText>옵션선택</OptionsText>
+                    <DropdownContainer>
+                      <DropdownBody onClick={onActiveToggle}>
+                        {opt ? (
+                          <>
+                            <ItemName>{opt}</ItemName>
+                            <AiOutlineDown
+                              color="gray"
+                              style={{ position: "absolute", right: "68px" }}
+                            />
+                          </>
                         ) : (
-                          <MinBox onClick={quanMinus}>
-                            <MinBut />
-                          </MinBox>
+                          <>
+                            <DropdownSelect>{foodOp[0].options}</DropdownSelect>
+                            <AiOutlineDown
+                              color="gray"
+                              style={{ position: "absolute", right: "68px" }}
+                            />
+                          </>
                         )}
-                        <NumBox>{quantity}</NumBox>
-                        <PlusBox onClick={quanCount}>
-                          <PlusBut />
-                        </PlusBox>
-                      </QuanBox>
-                      <OptionsText>옵션선택</OptionsText>
-                      <SelectBox>
+                      </DropdownBody>
+                      <DropdownMenu isActive={isActive}>
                         {foodOp.map((cur, idx) => (
-                          <OptionsBox value={cur.options} key={idx}>
-                            {cur.options}
-                          </OptionsBox>
+                          <DropdownItemContainer
+                            id="item"
+                            key={idx}
+                            onClick={onSelectItem}
+                          >
+                            <ItemName id="item_name">{cur.options}</ItemName>
+                          </DropdownItemContainer>
                         ))}
-                      </SelectBox>
-                      <TotalPrice>
-                        {(price * quantity).toLocaleString()}원
-                      </TotalPrice>
-                      <BuyBtn
-                        onClick={() => {
-                          history.push("/cart");
-                        }}
-                      >
-                        바로구매
-                      </BuyBtn>
-                      <CartBtn
-                        onClick={() => {
-                          order();
-                        }}
-                      >
-                        장바구니
-                      </CartBtn>
-                    </div>
+                      </DropdownMenu>
+                    </DropdownContainer>
+                    <TotalPrice>
+                      {(price * quantity).toLocaleString()}원
+                    </TotalPrice>
+                    <BuyBtn
+                      onClick={() => {
+                        history.push("/cart");
+                      }}
+                    >
+                      바로구매
+                    </BuyBtn>
+                    <CartBtn
+                      onClick={() => {
+                        order();
+                      }}
+                    >
+                      장바구니
+                    </CartBtn>
                   </Modal>
                 ) : null}
               </CardTopBox>
@@ -329,6 +378,7 @@ const BuyBtn = styled.button`
   float: left;
   cursor: pointer;
   background-color: #acacac;
+  margin-top: 15px;
 `;
 
 const CartBtn = styled.button`
@@ -341,6 +391,7 @@ const CartBtn = styled.button`
   float: left;
   cursor: pointer;
   background-color: black;
+  margin-top: 15px;
 `;
 
 const QuanBox = styled.div`
@@ -406,35 +457,68 @@ const OptionsText = styled.p`
   font-size: 16px;
 `;
 
-const SelectBox = styled.select`
-  width: 398px;
-  height: 50px;
-  font-size: 18px;
-  line-height: 1.33;
-  position: relative;
-  background-color: #fff;
-  border: 1px solid #e1dedf;
-  margin-left: 50px;
-  margin-top: 5px;
-`;
-
-const OptionsBox = styled.option`
-  width: 398px;
-  height: 50px;
-  font-size: 18px;
-  line-height: 1.33;
-  position: relative;
-  background-color: #fff;
-  border: 1px solid #e1dedf;
-  text-align: center;
-`;
-
 const TotalPrice = styled.p`
   font-size: 24px;
   font-weight: 700;
   margin-left: 350px;
   margin-top: 10px;
   margin-bottom: 10px;
+`;
+
+const DropdownContainer = styled.div`
+  width: 398px;
+  margin: 0 auto;
+  &:hover {
+    cursor: pointer;
+  }
+  poition: relative;
+`;
+
+const DropdownBody = styled.div`
+  width: 398px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e1dedf;
+`;
+
+const DropdownSelect = styled.p`
+  font-weight: bold;
+  color: black;
+  margin: 0 auto;
+`;
+
+const DropdownMenu = styled.ul`
+  display: ${(props) => (props.isActive ? `block` : `none`)};
+  width: 398px;
+  height: 130px;
+  position: absolute;
+  border: none;
+`;
+
+const DropdownItemContainer = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+
+  padding: 9px 65px;
+  border-top: none;
+  border-left: 0.5px solid #e1dedf;
+  border-right: 0.5px solid #e1dedf;
+
+  &:last-child {
+    border-bottom: 0.5px solid #e1dedf;
+    border-left: 0.5px solid #e1dedf;
+    border-right: 0.5px solid #e1dedf;
+  }
+`;
+
+const ItemName = styled.p`
+  font-weight: bold;
+  color: black;
+  margin: 0 auto;
 `;
 
 export default Main;

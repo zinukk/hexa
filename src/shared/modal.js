@@ -19,7 +19,7 @@ const asd = {
     borderRadius: "4px",
     outline: "none",
     width: "500px",
-    height: "390px",
+    height: "400px",
     padding: 0,
   },
 };

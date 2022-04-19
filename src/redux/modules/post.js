@@ -16,12 +16,13 @@ const getOnePost = createAction(GET_ONE_POST, (one_post) => ({ one_post }));
 const initialState = {};
 
 //미들웨어
-const sendpostDB = () => {
+const sendpostDB = (Order_info) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post("")
+      .post("", Order_info)
       .then((res) => {
         console.log(res.data);
+        alert("상품이 장바구니에 담겼습니다!");
       })
       .catch((err) => {
         console.log("err", err.response);
