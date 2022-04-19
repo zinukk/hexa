@@ -1,0 +1,28 @@
+{
+    "lists": [
+        {
+            "productId" : 1,
+            "name" : "초신선 돼지 삼겹살 구이용",
+            "image" : "https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-seoul-app/frontend/thumbnails/transparent_background/porkbelly-fresh-list.png",
+            "option" : "얇게(11mm)",
+            "quantity" : 1,
+            "price" : 16800,
+            "serving" : "600g",
+            "productType" : [{"fresh" : "true"}, {"zero" : "true"}]
+
+        },
+        {
+            "productId" : 2,
+            "name" : "초신선 닭볶음탕",
+            "image" : "https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-seoul-app/frontend/thumbnails/transparent_background/chickef-cut-list.png",
+            "option" : "보통",
+            "quantity" : "1",
+            "price" : 6300,
+            "serving" : "900g",
+            "productType" : [{"fresh" : "true"}, {"zero" : "true"}]
+
+        }
+
+    ]
+}
+
