@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import Grid from "../elements/Grid";
 import Text from "../elements/Text";
 import Button from "../elements/Button";
@@ -8,41 +8,67 @@ import Dropdown from "../components/Dropdown";
 import { useSelector, useDispatch } from "react-redux";
 
 import styled from "styled-components";
-import Quantity from "../components/Quantity";
+import { TEST } from "../shared/response";
 
-import {actionCreators as cartActions} from "../redux/modules/cart";
-import { actionCreators as postActions}  from "../redux/modules/post";
+import { actionCreators as cartActions } from "../redux/modules/cart";
+import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configStore";
+import { AiOutlineDown } from "react-icons/ai";
+import { BsPlusLg } from "react-icons/bs";
+import { FaMinus } from "react-icons/fa";
 
 const Detail = (props) => {
-  const dispatch = useDispatch();
+  useEffect(() => {
+    // dispatch(postActions.getOnePostDB())
+  });
 
-  console.log(props);
+  // const data = useSelector((state) => state.post.one_post);
 
-  const id = props.match.params.id;
-  const post_list = useSelector((state) => state?.post.list);
-  const post_idx = post_list.findIndex((p) => p.id);
-  const post = post_list[post_idx];
+  const data = TEST;
 
-  console.log(post_list);
+  console.log(data);
   const pId = props.match.params.productId;
-
   console.log(pId);
 
-  useEffect(() => {});
+  const dispatch = useDispatch();
 
-  let stanPrice = props.price.split(",").join(""); // 기준가에서 , 빼기
+  const [opt, setOpt] = useState(data.options[0]);
+  const [isActive, setIsActive] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
-  const addCart = () => {
-    dispatch(cartActions.addItemDB(post.productId));
+  const onActiveToggle = useCallback(() => {
+    setIsActive((prev) => !prev);
+  }, []);
+
+  const onSelectItem = useCallback((e) => {
+    const targetId = e.target.id;
+
+    if (targetId === "item_name") {
+      setOpt(e.target.parentElement.innerText);
+    } else if (targetId === "item") {
+      setOpt(e.target.innerText);
+    }
+
+    setIsActive((prev) => !prev);
+  }, []);
+
+  const quanCount = () => {
+    setQuantity(quantity + 1);
   };
 
-  React.useEffect(() => {
-    dispatch(postActions.getPostDB());
-  },[]);
+  const quanMinus = () => {
+    setQuantity(quantity - 1);
+  };
 
-  console.log(stanPrice);
-  const gramPrice = parseInt(stanPrice / props.serving) * 100; //g당 가격 계산
+  const order = () => {
+    const Order_info = {
+      productId: data.productId,
+      option: opt,
+      quantity: quantity,
+    };
+    console.log(Order_info);
+    dispatch(postActions.sendpostDB(Order_info));
+  };
 
   return (
     <React.Fragment>
@@ -62,53 +88,79 @@ const Detail = (props) => {
               margin="3.5rem 2.5rem 0 2.5rem"
             />
           </Grid>
-          <Grid width="20rem" margin="0 0 5rem 5rem">
+          <Grid width="380px" height="500px" margin="0 0 5rem 5rem">
             <Text color="white" size="28px" margin="5rem 0 1rem 0" bold>
-              {props.name}
+              {data.name}
             </Text>
             <Text color="#9b9b9b" size="16px" margin="0">
-              100g당 {gramPrice}원
+              {data.per}
             </Text>
             <Text color="white" size="24px" margin="0.3rem 0 0 0" bold>
-              기준가 {props.price}원 ({props.serving}g)
+              기준가 {data.price}원 ({data.serving})
             </Text>
             <hr
               style={{
-                width: "23rem",
+                width: "380px",
                 height: "0.1rem",
                 backgroundColor: "#4a4a4a",
                 marginTop: "2rem",
                 border: "0",
               }}
             />
-            <Grid is_flex height="2rem" margin="2.9rem 0 0 0">
-              <Text
-                color="white"
-                is_float="left"
-                size="18px"
-                margin="0rem 1rem 1rem 0"
-              >
-                옵션
-              </Text>
-              <Grid margin="0 0 2rem 0">
-                <Dropdown />
-              </Grid>
-            </Grid>
-            <Grid is_flex height="2rem" margin="2.9rem 0 0 0">
-              <Text
-                color="white"
-                is_float="left"
-                size="18px"
-                margin="0 1rem 1rem 0"
-                bold
-              >
-                수량
-              </Text>
-              <Grid margin="0 0 2rem 0">
-                <Quantity />
-              </Grid>
-            </Grid>
-            <Grid is_flex2 margin="4rem 0 0 2rem">
+            <ControlBox>
+              <ConboxText>옵션</ConboxText>
+              <DropdownContainer>
+                <DropdownBody onClick={onActiveToggle}>
+                  {opt ? (
+                    <>
+                      <ItemName>{opt}</ItemName>
+                      <AiOutlineDown
+                        color="gray"
+                        style={{ position: "absolute", right: "18px" }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <DropdownSelect>{data.options[0]}</DropdownSelect>
+                      <AiOutlineDown
+                        color="gray"
+                        style={{ position: "absolute", right: "18px" }}
+                      />
+                    </>
+                  )}
+                </DropdownBody>
+                <DropdownMenu isActive={isActive}>
+                  {data.options.map((cur, idx) => (
+                    <DropdownItemContainer
+                      id="item"
+                      key={idx}
+                      onClick={onSelectItem}
+                    >
+                      <ItemName id="item_name">{cur}</ItemName>
+                    </DropdownItemContainer>
+                  ))}
+                </DropdownMenu>
+              </DropdownContainer>
+            </ControlBox>
+            <ControlBox>
+              <ConboxText>수량</ConboxText>
+              <QuanBox>
+                {quantity === 1 ? (
+                  <MinBox>
+                    <FaMinus size="20" color="gray" />
+                  </MinBox>
+                ) : (
+                  <MinBox onClick={quanMinus}>
+                    <FaMinus size="20" color="gray" />
+                  </MinBox>
+                )}
+                <NumBox>{quantity}</NumBox>
+                <PlusBox onClick={quanCount}>
+                  <BsPlusLg size="20" color="gray" />
+                </PlusBox>
+              </QuanBox>
+            </ControlBox>
+            <div style={{ display: "flex", marginTop: "50px" }}>
               <Button
                 width="50rem"
                 height="4rem"
@@ -116,6 +168,10 @@ const Detail = (props) => {
                 margin="0 2rem 0 0"
                 cursor="t"
                 border="none"
+                _onClick={() => {
+                  order();
+                  history.push("/cart");
+                }}
               >
                 <Text color="white" size="16px" bold>
                   바로구매
@@ -127,13 +183,15 @@ const Detail = (props) => {
                 bg="#d0021b"
                 cursor="t"
                 border="none"
-                _onClick={addCart}
+                _onClick={() => {
+                  order();
+                }}
               >
                 <Text color="white" size="16px" bold>
                   장바구니
                 </Text>
               </Button>
-            </Grid>
+            </div>
           </Grid>
         </Grid>
       </Grid>
@@ -184,6 +242,107 @@ const ItemImg = styled.div`
   padding-top: 75%;
   background-position: center;
   background-size: cover;
+`;
+
+const ControlBox = styled.div`
+  width: 380px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+`;
+
+const ConboxText = styled.p`
+  font-size: 18px;
+  line-height: 33px;
+  color: white;
+  margin-top: 9px;
+`;
+
+const DropdownContainer = styled.div`
+  width: 319px;
+  &:hover {
+    cursor: pointer;
+  }
+  position: relative;
+`;
+
+const DropdownBody = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 14px;
+  border: 1px solid gray;
+`;
+
+const DropdownSelect = styled.p`
+  font-weight: bold;
+  color: white;
+  margin: 0 auto;
+`;
+
+const DropdownMenu = styled.ul`
+  display: ${(props) => (props.isActive ? `block` : `none`)};
+  width: 319px;
+  height: 130px;
+  position: absolute;
+  border: none;
+`;
+
+const DropdownItemContainer = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c1c1c;
+
+  padding: 9px 14px;
+  border-top: none;
+  border-left: 0.5px solid gray;
+  border-right: 0.5px solid gray;
+
+  &:last-child {
+    border-bottom: 0.5px solid gray;
+    border-left: 0.5px solid gray;
+    border-right: 0.5px solid gray;
+  }
+`;
+
+const ItemName = styled.p`
+  font-weight: bold;
+  color: white;
+  margin: 0 auto;
+`;
+
+const QuanBox = styled.div`
+  display: flex;
+  width: 319px;
+  height: 50px;
+  border: 1px solid gray;
+`;
+
+const MinBox = styled.div`
+  width: 50px;
+  height: 50px;
+  padding: 15px 14px;
+  cursor: pointer;
+`;
+
+const PlusBox = styled.div`
+  width: 50px;
+  height: 50px;
+  padding: 13px 16px;
+  cursor: pointer;
+`;
+
+const NumBox = styled.div`
+  width: 220px;
+  height: 50px;
+  line-height: 48px;
+  font-size: 18px;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  padding-left: 108px;
+  color: white;
 `;
 
 export default Detail;
