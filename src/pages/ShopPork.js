@@ -243,7 +243,7 @@ const CardBox = styled.div`
   margin: 72px auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-row-gap: 5em;
+  grid-row-gap: 4em;
 `;
 
 const FoodCard = styled.div`
