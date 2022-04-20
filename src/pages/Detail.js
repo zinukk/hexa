@@ -20,22 +20,23 @@ import { FaMinus } from "react-icons/fa";
 const Detail = (props) => {
   // const data = TEST;
 
+  const data = useSelector((state) => state.post.one_post);
+  console.log(data);
+
   const pId = props.match.params.productId;
   console.log(pId);
+
   const Token = sessionStorage.getItem("token");
 
   useEffect(() => {
     dispatch(postActions.getOnePostDB(pId));
   }, []);
 
-  const data = useSelector((state) => state.post.one_post);
-  console.log(data);
-
   const dispatch = useDispatch();
 
-  const [opt, setOpt] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [opt, setOpt] = useState("");
 
   const onActiveToggle = useCallback(() => {
     setIsActive((prev) => !prev);
@@ -60,7 +61,7 @@ const Detail = (props) => {
   const quanMinus = () => {
     setQuantity(quantity - 1);
   };
-
+  console.log(opt);
   const order = () => {
     const Order_info = {
       productId: data.productId,
