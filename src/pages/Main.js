@@ -1,14 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
-import Post from "../components/Post";
 import Grid from "../elements/Grid";
-import Text from "../elements/Text";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { RESP } from "../shared/response";
 import Modal from "react-modal";
-import { useState } from "react";
 import asd from "../shared/modal";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -185,6 +182,8 @@ const Main = () => {
                     <CartBtn
                       onClick={() => {
                         order();
+                        setModalIsOpen(false);
+                        alert("상품이 장바구니에 담겼습니다!");
                       }}
                     >
                       장바구니

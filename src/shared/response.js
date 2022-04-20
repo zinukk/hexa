@@ -63,3 +63,15 @@ export const RESP = {
     },
   ],
 };
+
+export const TEST = {
+  productId: "1",
+  productType: true,
+  price: 16800,
+  serving: "180g",
+  per: "100g당 2800원",
+  imageFile: "/images/basic.jpg",
+  name: "상품이름",
+  contentImageList: ["상세이미지1", "상세이미지2"],
+  options: ["option1", "option2"],
+};
