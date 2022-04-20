@@ -22,7 +22,6 @@ const sendpostDB = (Order_info) => {
       .post("", Order_info)
       .then((res) => {
         console.log(res.data);
-        alert("상품이 장바구니에 담겼습니다!");
       })
       .catch((err) => {
         console.log("err", err.response);

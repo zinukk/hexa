@@ -22,8 +22,8 @@ const Cart = (props) => {
   const order = () => {
     // const order_confirm = window.alert("주문을 하시려구요?");
     // if (order_confirm) {
-      dispatch(cartActions.deleteCartDB());
-      window.alert("주문완료! 다음에 또 봬요~~");
+    dispatch(cartActions.deleteCartDB());
+    window.alert("주문완료! 다음에 또 봬요~~");
     // }
   };
 
@@ -161,7 +161,7 @@ const Cart = (props) => {
                 cursor="t"
                 _onClick={order}
               >
-                <Text color="white" size="15px" bold> 
+                <Text color="white" size="15px" bold>
                   전체상품 주문하기
                 </Text>
               </Button>
