@@ -21,8 +21,8 @@ const Detail = (props) => {
 
   const id = props.match.params.id;
   const post_list = useSelector((state) => state?.post.list);
-  const post_idx = post_list.findIndex((p) => p.id);
-  const post = post_list[post_idx];
+  // const post_idx = post_list.findIndex((p) => p.id);
+  // const post = post_list[post_idx];
 
   console.log(post_list);
   const pId = props.match.params.productId;
@@ -33,12 +33,12 @@ const Detail = (props) => {
 
   let stanPrice = props.price.split(",").join(""); // 기준가에서 , 빼기
 
-  const addCart = () => {
-    dispatch(cartActions.addItemDB(post.productId));
-  };
+  // const addCart = () => {
+  //   dispatch(cartActions.addItemDB(post.productId));
+  // };
 
   React.useEffect(() => {
-    dispatch(postActions.getPostDB());
+    dispatch(postActions.getpostDB());
   },[]);
 
   console.log(stanPrice);
@@ -127,7 +127,6 @@ const Detail = (props) => {
                 bg="#d0021b"
                 cursor="t"
                 border="none"
-                _onClick={addCart}
               >
                 <Text color="white" size="16px" bold>
                   장바구니
