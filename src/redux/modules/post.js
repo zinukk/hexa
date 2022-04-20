@@ -16,10 +16,19 @@ const getOnePost = createAction(GET_ONE_POST, (one_post) => ({ one_post }));
 const initialState = {};
 
 //미들웨어
-const sendpostDB = (Order_info) => {
+const sendpostDB = (Order_info, Token) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post("/cart", Order_info)
+      .post("http://3.39.23.124:8080/cart", Order_info, {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          "content-type": "application/json;charset=UTF-8",
+          accept: "application/json,",
+
+          // accept: "application/json,",
+          // Authorization: token,
+        },
+      })
       .then((res) => {
         console.log(res.data);
       })
@@ -32,8 +41,9 @@ const sendpostDB = (Order_info) => {
 const getpostDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get("/api/products")
+      .get(`http://3.39.23.124:8080/api/products`)
       .then((res) => {
+        console.log(res.data);
         dispatch(getPost(res.data));
       })
       .catch((err) => {
@@ -45,7 +55,7 @@ const getpostDB = () => {
 const getOnePostDB = (pId) => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`/api/products/${pId}`)
+      .get(`http://3.39.23.124:8080/api/products/${pId}`)
       .then((res) => {
         console.log(res.data);
         dispatch(getOnePost(res.data));
