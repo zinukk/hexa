@@ -7,6 +7,7 @@ const OAuth2RedirectHandeler = () => {
 
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code");
+  console.log(code);
 
   React.useEffect =
     (async () => {

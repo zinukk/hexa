@@ -27,8 +27,11 @@ const loginDB = (Login_info) => {
       .then((res) => {
         alert("로그인 성공");
         console.log(res);
-        console.log(res.headers.authorization);
-        sessionStorage.setItem("token", res.headers.authorization);
+        console.log(res.headers.authorization.split(" ")[1]);
+        sessionStorage.setItem(
+          "token",
+          res.headers.authorization.split(" ")[1]
+        );
         dispatch(setLogin(Login_info));
         history.push("/");
       })
@@ -43,7 +46,7 @@ const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: "GET",
-      url: `/user/kakao/callback?code=${code}`,
+      url: `http://3.39.23.124:8080/user/kakao/callback?code=${code}`,
     })
       .then((res) => {
         console.log(res.data); // 토큰이 넘어올 것임
@@ -52,7 +55,7 @@ const kakaoLogin = (code) => {
 
         sessionStorage.setItem("kakao_token", KAKAO_TOKEN); //예시로 로컬에 저장함
 
-        history.replace("/main"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        history.replace("/"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch((err) => {
         console.log("소셜로그인 에러", err);

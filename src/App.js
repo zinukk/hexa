@@ -13,14 +13,14 @@ import React from "react";
 import { history } from "./redux/configStore";
 import { ConnectedRouter } from "connected-react-router";
 import { useDispatch } from "react-redux";
-import { actionCreators as shopActions } from "./redux/modules/post";
+import { actionCreators as postActions } from "./redux/modules/post";
 
 function App() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(shopActions.getpostDB());
-  });
+    dispatch(postActions.getpostDB());
+  }, []);
 
   return (
     <React.Fragment>
