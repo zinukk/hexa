@@ -23,54 +23,43 @@ const initialState = {
   quantity: 1,
 };
 
-const addItemDB = (productId, option, quantity) => {
+const getCartDB = (Token) => {
   return async function (dispatch, getState, { history }) {
     axios
-      .post("http://localhost:4000/lists", {
-        params: {
-          productId: productId,
-          option: option,
-          quantity: quantity,
+      .get("http://3.39.23.124:8080/cart", {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          "content-type": "application/json;charset=UTF-8",
+          accept: "application/json,",
+          // accept: "application/json,",
+          // Authorization: token,
         },
       })
-      .then(function (res) {
-        window.alert("장바구니에 추가 되었습니다. 장바구니를 확인해주세요!");
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
-
-const getCartDB = () => {
-  return async function (dispatch, getState, { history }) {
-    axios
-      .get("http://localhost:4000/lists")
       .then((res) => {
-        let product_list = [];
-        res.data.forEach((p) => {
-          let product = {
-            productId: p.productId,
-            name: p.name,
-            image: p.image,
-            option: p.option,
-            quantity: p.quantity,
-            price: p.price,
-            serving: p.serving,
-            productType: p.productType,
-          };
-          product_list.push(product);
-        });
-        console.log(product_list);
-        let itemtotal = res.data.price * res.data.quantity;
-        console.log(res);
-        console.log(itemtotal); //NaN
-        dispatch(setTotal(itemtotal));
-        dispatch(setCart(product_list));
+        console.log(res.data);
+        dispatch(setCart(res.data));
+        // let product_list = [];
+        // res.data.forEach((p) => {
+        //   let product = {
+        //     productId: p.productId,
+        //     name: p.name,
+        //     image: p.image,
+        //     option: p.option,
+        //     quantity: p.quantity,
+        //     price: p.price,
+        //     serving: p.serving,
+        //     productType: p.productType,
+        //   };
+        //   product_list.push(product);
       })
-      .catch(function (err) {
-        console.log(err);
+      // console.log(product_list);
+      // let itemtotal = res.data.price * res.data.quantity;
+      // console.log(res);
+      // console.log(itemtotal); //NaN
+      // dispatch(setTotal(itemtotal));
+      // })
+      .catch((err) => {
+        console.log(err.response);
       });
   };
 };
@@ -131,7 +120,7 @@ export default handleActions(
           return p.id === action.payload.productId;
         });
         // if (draft.list[index] === action.payload.productId) {
-          draft.quantity = draft.quantity + 1;
+        draft.quantity = draft.quantity + 1;
         // }
       }),
 
@@ -157,7 +146,6 @@ export default handleActions(
 const actionCreators = {
   setCart,
   setTotal,
-  addItemDB,
   deleteItem,
   deleteCartDB,
   getCartDB,
