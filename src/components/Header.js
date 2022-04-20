@@ -73,7 +73,7 @@ const Header = () => {
               <HeaderTxt2>|</HeaderTxt2>
               <HeaderTxt2
                 onClick={() => {
-                  history.push("/login");
+                  history.push("/cart");
                 }}
               >
                 장바구니
@@ -81,7 +81,6 @@ const Header = () => {
               <HeaderTxt2
                 onClick={() => {
                   logout_click();
-                  history.push("/cart");
                 }}
               >
                 로그아웃

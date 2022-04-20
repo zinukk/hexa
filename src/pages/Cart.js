@@ -17,8 +17,16 @@ import EmptyCart from "../components/EmptyCart";
 const Cart = (props) => {
   const dispatch = useDispatch();
 
-  const cart_list = useSelector((state) => state?.cart.list);
+  const Token = sessionStorage.getItem("token");
+  console.log(Token);
+
+  React.useEffect(() => {
+    dispatch(cartActions.getCartDB(Token));
+  }, []);
+
+  const cart_list = useSelector((state) => state?.cart.list.lists);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
+
   console.log(cart_list);
   console.log(totalPrice);
 
@@ -32,11 +40,6 @@ const Cart = (props) => {
     dispatch(cartActions.deleteCartDB());
     window.alert("주문완료! 다음에 또 봬요~~");
   };
-
-  React.useEffect(() => {
-    console.log(cart_list);
-    dispatch(cartActions.getCartDB());
-  }, []);
 
   if (cart_list.length !== 0) {
     return (
@@ -78,7 +81,7 @@ const Cart = (props) => {
                 border: "0",
               }}
             />
-            {cart_list.map((p, idx) => {
+            {/* {cart_list.map((p, idx) => {
               return (
                 <CartList
                   {...p}
@@ -87,7 +90,7 @@ const Cart = (props) => {
                   tot={totalPrice ? tot : ""}
                 />
               );
-            })}
+            })} */}
           </div>
           <div style={{ margin: "0 0 44.5rem 0" }}>
             <Grid margin="0 0 0 2rem" width="280px" bg="#f8f8f8">
