@@ -12,33 +12,12 @@ import { actionCreators as cartActions } from "../redux/modules/cart";
 import { useDispatch, useSelector } from "react-redux";
 
 const CartList = (props) => {
-
   const dispatch = useDispatch();
-  // const cart_list = useSelector((state) => state?.cart.list);
 
-  // console.log(cart_list);
+  const item_quantity = useSelector((state) => state?.cart.quantity);
 
-  React.useEffect(() => {
-    dispatch(cartActions.getCartDB());
-  }, []);
+  console.log(props.productId);
 
-  // const totalPrice = useSelector((state) => state?.cart.totalPrice);
-
-  const [qty, setQty] = React.useState(props?.quantity);
-
-  const plusQty = () => {
-    setQty(parseInt(qty) + 1);
-  };
-
-  const minusQty = () => {
-    if (qty <= 1) {
-      window.alert("최소 주문 수량은 1개 입니다!");
-    } else {
-      setQty(parseInt(qty) - 1);
-    }
-  };
-
-  console.log(props.productId)
   const deleteItem = () => {
     dispatch(cartActions.deleteItemDB(props.productId));
   };
@@ -57,42 +36,54 @@ const CartList = (props) => {
           </div>
         </div>
         <Grid padding="1rem 2.5rem 2.5rem 5rem">
-          <Text width="22rem" size="16px" margin="0">
+          <Text width="13rem" size="16px">
             {props.name}
           </Text>
           <Text color="#9b9b9b" size="14px" margin="0">
             {props.option}
           </Text>
         </Grid>
-        <Grid is_flex2>
+        <Grid is_flex2 margin="auto 8rem auto auto">
           <Text padding="0 5rem 0 0" width="7rem" color="#9b9b9b" size="14px">
             {props.serving}기준
           </Text>
-          <Grid border="0.5px solid gray" width="118px" height="38px" is_flex>
+          <Grid
+            margin="auto 5rem auto auto"
+            border="0.5px solid gray"
+            width="118px"
+            height="38px"
+            is_flex
+          >
             <Button
               bg="transparent"
               border="none"
               width="44px"
               height="38px"
-              _onClick={minusQty}
+              _onClick={() => {
+                props.getTotal(props.tot - props.price); // Cart.js getTotal()에 실어 갈 값 -> setTot
+                dispatch(cartActions.minusQty(props.productId));
+              }}
             >
               <FaMinus size="15" color="gray" />
             </Button>
             <Text color="black" size="16px">
-              {props.quantity}
+              {item_quantity}
             </Text>
             <Button
               bg="transparent"
               border="none"
               width="44px"
               height="38px"
-              _onClick={plusQty}
+              _onClick={() => {
+                props.getTotal(props.tot + props.price);
+                dispatch(cartActions.plusQty(props.productId));
+              }}
             >
               <BsPlusLg size="15" color="gray" />
             </Button>
           </Grid>
           <Text padding="0 5rem 0 0" width="7rem" color="black" size="16px">
-            {parseInt(props.price) * qty}원
+            {parseInt(props.price) * item_quantity}원
           </Text>
           <Button
             padding="auto"
