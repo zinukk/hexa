@@ -102,6 +102,9 @@ const Main = () => {
                     }}
                   ></CardImg>
                 </CardImgBox>
+                {
+                  
+                }
                 <CartButton
                   onClick={() => {
                     setModalIsOpen(true);
