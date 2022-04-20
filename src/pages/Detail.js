@@ -18,17 +18,18 @@ import { BsPlusLg } from "react-icons/bs";
 import { FaMinus } from "react-icons/fa";
 
 const Detail = (props) => {
-  useEffect(() => {
-    // dispatch(postActions.getOnePostDB())
-  });
-
-  // const data = useSelector((state) => state.post.one_post);
-
   const data = TEST;
 
   console.log(data);
   const pId = props.match.params.productId;
   console.log(pId);
+
+  useEffect(() => {
+    dispatch(postActions.getOnePostDB(pId));
+  });
+
+  const one_post = useSelector((state) => state.post.one_post);
+  console.log(one_post);
 
   const dispatch = useDispatch();
 

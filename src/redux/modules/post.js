@@ -19,7 +19,7 @@ const initialState = {};
 const sendpostDB = (Order_info) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post("", Order_info)
+      .post("/cart", Order_info)
       .then((res) => {
         console.log(res.data);
       })
@@ -32,7 +32,7 @@ const sendpostDB = (Order_info) => {
 const getpostDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get("")
+      .get("/api/products")
       .then((res) => {
         dispatch(getPost(res.data));
       })
@@ -42,10 +42,10 @@ const getpostDB = () => {
   };
 };
 
-const getOnePostDB = () => {
+const getOnePostDB = (pId) => {
   return function (dispatch, getState, { history }) {
     axios
-      .get("")
+      .get(`/api/products/${pId}`)
       .then((res) => {
         console.log(res.data);
         dispatch(getOnePost(res.data));

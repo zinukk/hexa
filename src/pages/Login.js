@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import { history } from "../redux/configStore";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch } from "react-redux";
+import { KAKAO_AUTH_URL } from "../shared/OAuth";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,6 @@ const Login = () => {
   };
 
   const login_click = () => {
-
     const Login_info = {
       username: values.username,
       password: values.password,
@@ -37,7 +37,7 @@ const Login = () => {
 
     console.log(Login_info);
 
-    // dispatch(userActions.loginDB(Login_info));
+    dispatch(userActions.loginDB(Login_info));
   };
 
   // 토큰 체크
@@ -74,7 +74,7 @@ const Login = () => {
         </LoginBox>
         <SocialBox>
           <LoginText2>SNS 간편 로그인</LoginText2>
-          <KakaoButton>카카오로 시작하기</KakaoButton>
+          <KakaoButton href={KAKAO_AUTH_URL}>카카오로 시작하기</KakaoButton>
           <NaverButton>네이버로 시작하기</NaverButton>
           <FindButton
             onClick={() => {
