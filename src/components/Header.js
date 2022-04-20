@@ -78,7 +78,14 @@ const Header = () => {
               >
                 장바구니
               </HeaderTxt2>
-              <HeaderTxt2 onClick={logout_click}>로그아웃</HeaderTxt2>
+              <HeaderTxt2
+                onClick={() => {
+                  logout_click();
+                  history.push("/cart");
+                }}
+              >
+                로그아웃
+              </HeaderTxt2>
             </FlexBox2>
           </HeaderBox>
         </Container>

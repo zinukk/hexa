@@ -18,22 +18,22 @@ import { BsPlusLg } from "react-icons/bs";
 import { FaMinus } from "react-icons/fa";
 
 const Detail = (props) => {
-  const data = TEST;
+  // const data = TEST;
 
-  console.log(data);
   const pId = props.match.params.productId;
   console.log(pId);
+  const Token = sessionStorage.getItem("token");
 
   useEffect(() => {
     dispatch(postActions.getOnePostDB(pId));
-  });
+  }, []);
 
-  const one_post = useSelector((state) => state.post.one_post);
-  console.log(one_post);
+  const data = useSelector((state) => state.post.one_post);
+  console.log(data);
 
   const dispatch = useDispatch();
 
-  const [opt, setOpt] = useState(data.options[0]);
+  const [opt, setOpt] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -68,7 +68,7 @@ const Detail = (props) => {
       quantity: quantity,
     };
     console.log(Order_info);
-    dispatch(postActions.sendpostDB(Order_info));
+    dispatch(postActions.sendpostDB(Order_info, Token));
   };
 
   return (
@@ -82,22 +82,17 @@ const Detail = (props) => {
             margin="0 1.4rem 1.5rem 0"
             padding="0.5rem 0.5rem 0rem 0.5rem"
           >
-            <ItemImg
-              src={
-                "https://jeongyookgak-commerce.s3.ap-northeast-2.amazonaws.com/jyg-custom-seoul-app/frontend/thumbnails/transparent_background/porkbelly-fresh-list.png"
-              }
-              margin="3.5rem 2.5rem 0 2.5rem"
-            />
+            <ItemImg src={data?.imageFile} margin="3.5rem 2.5rem 0 2.5rem" />
           </Grid>
           <Grid width="380px" height="500px" margin="0 0 5rem 5rem">
             <Text color="white" size="28px" margin="5rem 0 1rem 0" bold>
-              {data.name}
+              {data?.name}
             </Text>
             <Text color="#9b9b9b" size="16px" margin="0">
-              {data.per}
+              {/* {data.per} */}
             </Text>
             <Text color="white" size="24px" margin="0.3rem 0 0 0" bold>
-              기준가 {data.price}원 ({data.serving})
+              기준가 {data?.price}원 ({data?.serving})
             </Text>
             <hr
               style={{
@@ -122,7 +117,7 @@ const Detail = (props) => {
                     </>
                   ) : (
                     <>
-                      <DropdownSelect>{data.options[0]}</DropdownSelect>
+                      <DropdownSelect>{data?.option[0]}</DropdownSelect>
                       <AiOutlineDown
                         color="gray"
                         style={{ position: "absolute", right: "18px" }}
@@ -131,7 +126,7 @@ const Detail = (props) => {
                   )}
                 </DropdownBody>
                 <DropdownMenu isActive={isActive}>
-                  {data.options.map((cur, idx) => (
+                  {data?.option.map((cur, idx) => (
                     <DropdownItemContainer
                       id="item"
                       key={idx}

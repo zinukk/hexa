@@ -19,10 +19,10 @@ import bottombanner from "../shared/img/bottombanner.png";
 const Main = () => {
   const dispatch = useDispatch();
 
-  const data = RESP.lists;
+  // const data = RESP.lists;
 
-  const post_list = useSelector((state) => state.post);
-  console.log(post_list);
+  const data = useSelector((state) => state?.post?.lists);
+  console.log(data);
 
   const Token = sessionStorage.getItem("token");
   console.log(Token);
@@ -59,8 +59,8 @@ const Main = () => {
       quantity: quantity,
     };
 
-    dispatch(postActions.sendpostDB(Order_info));
     console.log(Order_info);
+    dispatch(postActions.sendpostDB(Order_info, Token));
   };
 
   const quanCount = () => {
@@ -86,19 +86,19 @@ const Main = () => {
       <div>
         <ContentBox>정육각 베스트 상품</ContentBox>
         <CardBox>
-          {data.map((cur, idx) => (
-            <FoodCard key={cur.productId}>
+          {data?.map((cur, idx) => (
+            <FoodCard key={cur?.productId}>
               <CardTopBox>
-                {cur.productType[1].zero === true ? (
+                {cur?.productType[0]?.zero === true ? (
                   <ZeroBox></ZeroBox>
                 ) : (
                   <NonZeroBox></NonZeroBox>
                 )}
                 <CardImgBox>
                   <CardImg
-                    src={cur.image}
+                    src={cur?.image}
                     onClick={() => {
-                      history.push(`/detail/${cur.productId}`);
+                      history.push(`/detail/${cur?.productId}`);
                     }}
                   ></CardImg>
                 </CardImgBox>
@@ -108,11 +108,11 @@ const Main = () => {
                 <CartButton
                   onClick={() => {
                     setModalIsOpen(true);
-                    setFoodName(cur.name);
-                    setPrice(cur.price);
-                    setFoodId(cur.productId);
-                    setFoodOp(cur.option);
-                    setOpt(cur.option[0].options);
+                    setFoodName(cur?.name);
+                    setPrice(cur?.price);
+                    setFoodId(cur?.productId);
+                    setFoodOp(cur?.option);
+                    setOpt(cur?.option[0]);
                     console.log(opt);
                   }}
                 />
@@ -123,6 +123,7 @@ const Main = () => {
                     onRequestClose={() => {
                       setModalIsOpen(false);
                       setQuantity(1);
+                      setIsActive(false);
                     }}
                     style={asd}
                   >
@@ -155,7 +156,7 @@ const Main = () => {
                           </>
                         ) : (
                           <>
-                            <DropdownSelect>{foodOp[0].options}</DropdownSelect>
+                            <DropdownSelect>{foodOp[0]}</DropdownSelect>
                             <AiOutlineDown
                               color="gray"
                               style={{ position: "absolute", right: "68px" }}
@@ -170,7 +171,7 @@ const Main = () => {
                             key={idx}
                             onClick={onSelectItem}
                           >
-                            <ItemName id="item_name">{cur.options}</ItemName>
+                            <ItemName id="item_name">{cur}</ItemName>
                           </DropdownItemContainer>
                         ))}
                       </DropdownMenu>
@@ -199,18 +200,18 @@ const Main = () => {
               </CardTopBox>
               <CardTitle
                 onClick={() => {
-                  history.push(`/detail/${cur.productId}`);
+                  history.push(`/detail/${cur?.productId}`);
                 }}
               >
-                {cur.name}
+                {cur?.name}
               </CardTitle>
               <CardData
                 onClick={() => {
                   history.push(`/detail/${cur.productId}`);
                 }}
               >
-                기준가 {cur.price.toLocaleString()}원/
-                {cur.serving.toLocaleString()}
+                기준가 {cur?.price?.toLocaleString()}원/
+                {cur?.serving?.toLocaleString()}
               </CardData>
             </FoodCard>
           ))}
