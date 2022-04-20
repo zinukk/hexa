@@ -22,6 +22,10 @@ const Main = () => {
   const data = RESP.lists;
 
   const post_list = useSelector((state) => state.post);
+  console.log(post_list);
+
+  const Token = sessionStorage.getItem("token");
+  console.log(Token);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -47,7 +51,6 @@ const Main = () => {
 
     setIsActive((prev) => !prev);
   }, []);
-  console.log(opt);
 
   const order = () => {
     const Order_info = {

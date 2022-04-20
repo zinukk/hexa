@@ -39,6 +39,29 @@ const loginDB = (Login_info) => {
   };
 };
 
+const kakaoLogin = (code) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: "GET",
+      url: `/user/kakao/callback?code=${code}`,
+    })
+      .then((res) => {
+        console.log(res.data); // 토큰이 넘어올 것임
+
+        const KAKAO_TOKEN = res.data.accessToken;
+
+        sessionStorage.setItem("kakao_token", KAKAO_TOKEN); //예시로 로컬에 저장함
+
+        history.replace("/main"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      })
+      .catch((err) => {
+        console.log("소셜로그인 에러", err);
+        window.alert("로그인에 실패하였습니다.");
+        history.replace("/login"); // 로그인 실패하면 로그인화면으로 돌려보냄
+      });
+  };
+};
+
 //회원가입 기능
 const signupDB = (Signup_info) => {
   return function (dispatch, getState, { history }) {
@@ -100,6 +123,7 @@ const actionCreators = {
   loginDB,
   // logoutDB,
   setLogout,
+  kakaoLogin,
 };
 
 export { actionCreators };
