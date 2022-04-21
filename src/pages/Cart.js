@@ -18,22 +18,29 @@ const Cart = (props) => {
   const dispatch = useDispatch();
 
   const Token = sessionStorage.getItem("token");
+  const cart_list = useSelector((state) => state?.cart?.list?.lists);
   console.log(Token);
 
   React.useEffect(() => {
     dispatch(cartActions.getCartDB(Token));
   }, []);
 
-  const cart_list = useSelector((state) => state?.cart?.list?.lists);
-  const totalPrice = cart_list.price * cart_list.quantity;
+  React.useEffect(() => {
+    let totalprice = 0;
+    cart_list?.map((p, idx) =>  totalprice = p.price + totalprice);
+    console.log("dd")
+    console.log(cart_list);
+    console.log(totalprice);
+    getTotal(totalprice);
+  },[cart_list])
 
-  console.log(props);
-  console.log(cart_list);
-  console.log(totalPrice);
+  
+  // const totalPrice = props.price * props.quantity;
 
-  const [tot, setTot] = React.useState(totalPrice);
+  const [tot, setTot] = React.useState();
 
   const getTotal = (total) => {
+    console.log(total);
     setTot(total);
   };
 
@@ -87,7 +94,8 @@ const Cart = (props) => {
                   {...p}
                   key={p.productId}
                   getTotal={getTotal}
-                  tot={totalPrice ? tot : ""}
+
+                  tot={tot}
                 />
               );
             })}
