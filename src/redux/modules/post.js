@@ -24,7 +24,6 @@ const sendpostDB = (Order_info, Token) => {
           Authorization: `Bearer ${Token}`,
           "content-type": "application/json;charset=UTF-8",
           accept: "application/json,",
-
           // accept: "application/json,",
           // Authorization: token,
         },

@@ -102,20 +102,26 @@ const Main = () => {
                     }}
                   ></CardImg>
                 </CardImgBox>
-                {
-                  
-                }
-                <CartButton
-                  onClick={() => {
-                    setModalIsOpen(true);
-                    setFoodName(cur?.name);
-                    setPrice(cur?.price);
-                    setFoodId(cur?.productId);
-                    setFoodOp(cur?.option);
-                    setOpt(cur?.option[0]);
-                    console.log(opt);
-                  }}
-                />
+                {Token ? (
+                  <CartButton
+                    onClick={() => {
+                      setModalIsOpen(true);
+                      setFoodName(cur?.name);
+                      setPrice(cur?.price);
+                      setFoodId(cur?.productId);
+                      setFoodOp(cur?.option);
+                      setOpt(cur?.option[0]);
+                      console.log(opt);
+                    }}
+                  />
+                ) : (
+                  <CartButton
+                    onClick={() => {
+                      alert("로그인을 먼저 해주세요!");
+                      history.push("/login");
+                    }}
+                  />
+                )}
                 {modalIsOpen ? (
                   <Modal
                     isOpen={modalIsOpen}
@@ -179,13 +185,16 @@ const Main = () => {
                     <TotalPrice>
                       {(price * quantity).toLocaleString()}원
                     </TotalPrice>
+
                     <BuyBtn
                       onClick={() => {
+                        order();
                         history.push("/cart");
                       }}
                     >
                       바로구매
                     </BuyBtn>
+
                     <CartBtn
                       onClick={() => {
                         order();
