@@ -68,13 +68,27 @@ const getCartDB = (Token) => {
   };
 };
 
-const deleteItemDB = (productId) => {
+const deleteItemDB = (pId, pOption, Token) => {
   console.log("지워주세요!");
   return async function (dispatch, getState, { history }) {
     axios
-      .delete("http://3.39.23.124:8080/cart/{productId}")
+      .put(
+        `http://3.39.23.124:8080/cart/${pId}`,
+        {
+          option: pOption,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "content-type": "application/json;charset=UTF-8",
+            accept: "application/json,",
+            // accept: "application/json,",
+            // Authorization: token,
+          },
+        }
+      )
       .then(function (res) {
-        dispatch(deleteItem(productId));
+        dispatch(deleteItem(pId));
         window.alert("삭제가 완료되었습니다.");
         history.replace("/cart");
       })
@@ -84,12 +98,20 @@ const deleteItemDB = (productId) => {
   };
 };
 
-const deleteCartDB = () => {
-  console.log("다 지워져라ㅏㅏ");
-  return async function (dispatch, getState, { histoty }) {
+const deleteCartDB = (Token) => {
+  return function (dispatch, getState, { histoty }) {
     axios
-      .delete("http://3.39.23.124:8080/orders")
+      .delete("http://3.39.23.124:8080/orders", {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+          "content-type": "application/json;charset=UTF-8",
+          accept: "application/json,",
+          // accept: "application/json,",
+          // Authorization: token,
+        },
+      })
       .then((res) => {
+        alert("주문완료! 다음에 또 봬요~~");
         window.location.reload();
       })
       .catch((err) => {

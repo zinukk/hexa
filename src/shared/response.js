@@ -73,5 +73,5 @@ export const TEST = {
   imageFile: "/images/basic.jpg",
   name: "상품이름",
   contentImageList: ["상세이미지1", "상세이미지2"],
-  options: ["option1", "option2"],
+  option: ["option1", "option2"],
 };
