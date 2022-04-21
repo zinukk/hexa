@@ -41,7 +41,7 @@ const Cart = (props) => {
     window.alert("주문완료! 다음에 또 봬요~~");
   };
 
-  if (cart_list.length !== 0) {
+  if (cart_list?.length !== 0) {
     return (
       <React.Fragment>
         <Header />
@@ -208,7 +208,9 @@ const Cart = (props) => {
   } else {
     return (
       <React.Fragment>
+        <Header />
         <EmptyCart />
+        <Footer />
       </React.Fragment>
     );
   }
