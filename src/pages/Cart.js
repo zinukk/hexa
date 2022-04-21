@@ -25,8 +25,9 @@ const Cart = (props) => {
   }, []);
 
   const cart_list = useSelector((state) => state?.cart?.list?.lists);
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const totalPrice = cart_list.price * cart_list.quantity;
 
+  console.log(props);
   console.log(cart_list);
   console.log(totalPrice);
 
@@ -37,8 +38,7 @@ const Cart = (props) => {
   };
 
   const order = () => {
-    dispatch(cartActions.deleteCartDB());
-    window.alert("주문완료! 다음에 또 봬요~~");
+    dispatch(cartActions.deleteCartDB(Token));
   };
 
   if (cart_list?.length !== 0) {
@@ -216,12 +216,12 @@ const Cart = (props) => {
   }
 };
 
-Cart.defaultProps = {
-  price: "16,800",
-  basicshipfee: "2,500",
-  totalshipfee: "0",
-  yesangfee: "16,800",
-};
+// Cart.defaultProps = {
+//   price: "16,800",
+//   basicshipfee: "2,500",
+//   totalshipfee: "0",
+//   yesangfee: "16,800",
+// };
 
 const Div = styled.div`
   display: flex;
@@ -231,3 +231,4 @@ const Div = styled.div`
   position: relative;
 `;
 export default Cart;
+

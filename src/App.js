@@ -35,8 +35,7 @@ function App() {
         <Route path="/shopbeef" exact component={ShopBeef} />
         <Route path="/cart" exact component={Cart} />
         <Route
-          path="/oauth/callback/kakao"
-          exact
+          path="/user/kakao/callback"
           component={OAuth2RedirectHandeler}
         ></Route>
       </ConnectedRouter>

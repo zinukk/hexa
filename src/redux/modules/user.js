@@ -6,15 +6,11 @@ import { apis } from "../../shared/api";
 // 액션
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
-const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
 
 // 액션 크리에이터
 const setLogin = createAction(LOGIN, (Login) => ({ Login }));
 const setLogout = createAction(LOGOUT, (Logout) => ({ Logout }));
-const getUser = createAction(GET_USER, (user) => ({ user }));
-const setUser = createAction(SET_USER, (user) => ({ user }));
-
 // 초기값
 const initialState = {};
 
@@ -25,7 +21,6 @@ const loginDB = (Login_info) => {
     axios
       .post(`http://3.39.23.124:8080/user/login`, Login_info)
       .then((res) => {
-        alert("로그인 성공");
         console.log(res);
         console.log(res.headers.authorization.split(" ")[1]);
         sessionStorage.setItem(
