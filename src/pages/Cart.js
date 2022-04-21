@@ -41,7 +41,7 @@ const Cart = (props) => {
     window.alert("주문완료! 다음에 또 봬요~~");
   };
 
-  if (cart_list.length !== 0) {
+  if (cart_list?.length !== 0) {
     return (
       <React.Fragment>
         <Header />
@@ -81,7 +81,7 @@ const Cart = (props) => {
                 border: "0",
               }}
             />
-            {cart_list.map((p, idx) => {
+            {cart_list?.map((p, idx) => {
               return (
                 <CartList
                   {...p}
