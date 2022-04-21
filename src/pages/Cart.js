@@ -81,7 +81,7 @@ const Cart = (props) => {
                 border: "0",
               }}
             />
-            {/* {cart_list.map((p, idx) => {
+            {cart_list.map((p, idx) => {
               return (
                 <CartList
                   {...p}
@@ -90,7 +90,7 @@ const Cart = (props) => {
                   tot={totalPrice ? tot : ""}
                 />
               );
-            })} */}
+            })}
           </div>
           <div style={{ margin: "0 0 44.5rem 0" }}>
             <Grid margin="0 0 0 2rem" width="280px" bg="#f8f8f8">
