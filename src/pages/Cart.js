@@ -81,7 +81,7 @@ const Cart = (props) => {
                 border: "0",
               }}
             />
-            {cart_list.map((p, idx) => {
+            {cart_list?.map((p, idx) => {
               return (
                 <CartList
                   {...p}
