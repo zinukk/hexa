@@ -24,7 +24,7 @@ const Cart = (props) => {
     dispatch(cartActions.getCartDB(Token));
   }, []);
 
-  const cart_list = useSelector((state) => state?.cart.list.lists);
+  const cart_list = useSelector((state) => state?.cart?.list?.lists);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
 
   console.log(cart_list);
