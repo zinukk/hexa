@@ -25,8 +25,9 @@ const Cart = (props) => {
   }, []);
 
   const cart_list = useSelector((state) => state?.cart?.list?.lists);
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const totalPrice = cart_list.price * cart_list.quantity;
 
+  console.log(props);
   console.log(cart_list);
   console.log(totalPrice);
 
@@ -214,12 +215,12 @@ const Cart = (props) => {
   }
 };
 
-Cart.defaultProps = {
-  price: "16,800",
-  basicshipfee: "2,500",
-  totalshipfee: "0",
-  yesangfee: "16,800",
-};
+// Cart.defaultProps = {
+//   price: "16,800",
+//   basicshipfee: "2,500",
+//   totalshipfee: "0",
+//   yesangfee: "16,800",
+// };
 
 const Div = styled.div`
   display: flex;
@@ -229,3 +230,4 @@ const Div = styled.div`
   position: relative;
 `;
 export default Cart;
+

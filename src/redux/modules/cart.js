@@ -7,6 +7,8 @@ const DELETE_ITEM = "DELETE_ITEM";
 const SET_TOTAL = "SET_TOTAL";
 const PLUS_QTY = "PLUS_QTY";
 const MINUS_QTY = "MINUS_QTY";
+const PLUS_PRICE = "PLUS_PRICE";
+const MINUS_PRICE= "MINUS_PRICE";
 
 const setCart = createAction(SET_CART, (product_list) => ({ product_list }));
 const deleteItem = createAction(DELETE_ITEM, (id, product_list) => ({
@@ -16,6 +18,8 @@ const deleteItem = createAction(DELETE_ITEM, (id, product_list) => ({
 const setTotal = createAction(SET_TOTAL, (total) => ({ total }));
 const plusQty = createAction(PLUS_QTY, (productId) => ({ productId }));
 const minusQty = createAction(MINUS_QTY, (productId) => ({ productId }));
+const plusPrice = createAction(PLUS_PRICE, (productId) => ({productId}));
+const minusPrice = createAction(MINUS_PRICE, (productId) => ({productId}));
 
 const initialState = {
   list: [],
@@ -68,7 +72,7 @@ const deleteItemDB = (productId) => {
   console.log("지워주세요!");
   return async function (dispatch, getState, { history }) {
     axios
-      .delete("http://localhost:4000/cart/{productId}")
+      .delete("http://3.39.23.124:8080/cart/{productId}")
       .then(function (res) {
         dispatch(deleteItem(productId));
         window.alert("삭제가 완료되었습니다.");
@@ -84,7 +88,7 @@ const deleteCartDB = () => {
   console.log("다 지워져라ㅏㅏ");
   return async function (dispatch, getState, { histoty }) {
     axios
-      .delete("http://localhost:4000/orders")
+      .delete("http://3.39.23.124:8080/orders")
       .then((res) => {
         window.location.reload();
       })
@@ -116,29 +120,27 @@ export default handleActions(
 
     [PLUS_QTY]: (state, action) =>
       produce(state, (draft) => {
-        const index = state.list.findIndex((p) => {
-          return p.id === action.payload.productId;
-        });
-        // if (draft.list[index] === action.payload.productId) {
-        draft.quantity = draft.quantity + 1;
-        // }
+        const index = state.list.lists.findIndex((p) => 
+         p.productId === action.payload.productId)
+        draft.list.lists[index].quantity = draft.list.lists[index].quantity + 1;
       }),
 
     [MINUS_QTY]: (state, action) =>
       produce(state, (draft) => {
-        const index = state.list.findIndex((p) => {
-          return p.productId === action.payload.productId;
-        });
-        draft.list[index] = {
-          ...draft.list[index],
-          quantity: action.payload.quantity,
-        };
-        if (draft.quantity <= 1) {
-          window.alert("최소 주문 수량은 1개 입니다!");
-        } else {
-          draft.quantity = draft.quantity - 1;
-        }
+        const index = state.list.lists.findIndex((p) =>
+        p.productId === action.payload.productId)
+        draft.list.lists[index].quantity = draft.list.lists[index].quantity - 1;
       }),
+
+    [PLUS_PRICE]: (state, action) => 
+      produce(state,(draft) => {
+       
+      }),
+
+    [MINUS_PRICE]: (state, action) => 
+      produce(state,(draft) => {
+
+      }),      
   },
   initialState
 );

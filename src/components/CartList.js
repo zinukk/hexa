@@ -12,15 +12,31 @@ import { actionCreators as cartActions } from "../redux/modules/cart";
 import { useDispatch, useSelector } from "react-redux";
 
 const CartList = (props) => {
+  console.log(props);
   const dispatch = useDispatch();
-
-  const item_quantity = useSelector((state) => state?.cart.quantity);
-
-  console.log(props.productId);
 
   const deleteItem = () => {
     dispatch(cartActions.deleteItemDB(props.productId));
   };
+  const itemquantity = props.quantity;
+
+  console.log(itemquantity);
+  // const [qty, setQty] = React.useState("1");
+  const itemtotal = props.price * itemquantity;
+
+  // const plusQty = () => {
+  //   setQty(parseInt(qty) + 1);
+  //   props?.getTotal(props?.tot + parseInt(props?.price));
+  // };
+
+  // const minusQty = () => {
+  //   if (qty <= 1) {
+  //     window.alert("최소 주문 수량은 1개 입니다!");
+  //   } else {
+  //     setQty(parseInt(qty) - 1);
+  //     props?.getTotal(props?.tot - props?.price);
+  //   }
+  // };
 
   return (
     <>
@@ -67,7 +83,7 @@ const CartList = (props) => {
               <FaMinus size="15" color="gray" />
             </Button>
             <Text color="black" size="16px">
-              {item_quantity}
+              {itemquantity}
             </Text>
             <Button
               bg="transparent"
@@ -83,7 +99,7 @@ const CartList = (props) => {
             </Button>
           </Grid>
           <Text padding="0 5rem 0 0" width="7rem" color="black" size="16px">
-            {parseInt(props.price) * item_quantity}원
+            {itemtotal}원
           </Text>
           <Button
             padding="auto"
@@ -122,3 +138,4 @@ const ItemImg = styled.img`
 `;
 
 export default CartList;
+
