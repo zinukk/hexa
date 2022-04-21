@@ -182,6 +182,7 @@ const Detail = (props) => {
                 border="none"
                 _onClick={() => {
                   order();
+                  alert("상품이 장바구니에 담겼습니다!");
                 }}
               >
                 <Text color="white" size="16px" bold>
@@ -205,7 +206,7 @@ const Detail = (props) => {
         <hr />
       </Grid>
       <hr />
-      <Text size="36px" text_align="center" bold>
+      {/* <Text size="36px" text_align="center" bold>
         여기에는
       </Text>
       <Text size="36px" text_align="center" bold>
@@ -216,7 +217,7 @@ const Detail = (props) => {
       </Text>
       <Text size="36px" text_align="center" bold>
         이미지가 들어가요!
-      </Text>
+      </Text> */}
       <Footer />
     </React.Fragment>
   );
