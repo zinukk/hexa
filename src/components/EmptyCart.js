@@ -43,7 +43,9 @@ const EmptyCart = () => {
           <Text margin="auto 0 auto 2rem" color="white" size="16px">
             쇼핑 계속하기
           </Text>
-          <Text margin="auto 3rem auto auto" size="25px" color="white">→</Text>
+          <Text margin="auto 3rem auto auto" size="25px" color="white">
+            →
+          </Text>
         </Button>
         <hr
           style={{
