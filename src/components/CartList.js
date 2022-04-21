@@ -86,7 +86,7 @@ const CartList = (props) => {
               width="44px"
               height="38px"
               _onClick={() => {
-                props.getTotal(props.tot - props.price); // Cart.js getTotal()에 실어 갈 값 -> setTot
+                // props.getTotal(props.tot - props.price); // Cart.js getTotal()에 실어 갈 값 -> setTot
                 dispatch(cartActions.minusQty(props.productId));
               }}
             >
@@ -101,7 +101,7 @@ const CartList = (props) => {
               width="44px"
               height="38px"
               _onClick={() => {
-                props.getTotal(props.tot + props.price);
+                // props.getTotal(props.tot + props.price);
                 dispatch(cartActions.plusQty(props.productId));
               }}
             >

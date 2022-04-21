@@ -69,7 +69,7 @@ const getCartDB = (Token) => {
 };
 
 const deleteItemDB = (pId, pOption, Token) => {
-  console.log("지워주세요!");
+  // console.log("지워주세요!");
   return async function (dispatch, getState, { history }) {
     axios
       .put(
@@ -88,7 +88,6 @@ const deleteItemDB = (pId, pOption, Token) => {
         }
       )
       .then(function (res) {
-        dispatch(deleteItem(pId));
         window.alert("삭제가 완료되었습니다.");
         history.replace("/cart");
       })
@@ -129,7 +128,7 @@ export default handleActions(
 
     [DELETE_ITEM]: (state, action) =>
       produce(state, (draft) => {
-        let idx = draft.list.findIndex(
+        let idx = draft.list.lists.findIndex(
           (p) => p.productId === action.payload.productId
         );
         draft.list.splice(idx, 1);
