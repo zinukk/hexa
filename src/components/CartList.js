@@ -14,12 +14,18 @@ import { useDispatch, useSelector } from "react-redux";
 const CartList = (props) => {
   const dispatch = useDispatch();
 
+  const Token = sessionStorage.getItem("token");
+
   const item_quantity = useSelector((state) => state?.cart.quantity);
 
   console.log(props.productId);
 
+  const pId = props.productId;
+  const pOption = props.option;
+
   const deleteItem = () => {
-    dispatch(cartActions.deleteItemDB(props.productId));
+    console.log(pId, pOption);
+    dispatch(cartActions.deleteItemDB(pId, pOption, Token));
   };
 
   return (

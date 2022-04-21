@@ -37,8 +37,7 @@ const Cart = (props) => {
   };
 
   const order = () => {
-    dispatch(cartActions.deleteCartDB());
-    window.alert("주문완료! 다음에 또 봬요~~");
+    dispatch(cartActions.deleteCartDB(Token));
   };
 
   if (cart_list?.length !== 0) {

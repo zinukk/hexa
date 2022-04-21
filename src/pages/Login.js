@@ -74,7 +74,13 @@ const Login = () => {
         </LoginBox>
         <SocialBox>
           <LoginText2>SNS 간편 로그인</LoginText2>
-          <KakaoButton href={KAKAO_AUTH_URL}>카카오로 시작하기</KakaoButton>
+          <KakaoButton
+            onClick={() => {
+              window.location.href = KAKAO_AUTH_URL;
+            }}
+          >
+            카카오로 시작하기
+          </KakaoButton>
           <NaverButton>네이버로 시작하기</NaverButton>
           <FindButton
             onClick={() => {
