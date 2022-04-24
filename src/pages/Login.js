@@ -79,7 +79,7 @@ const Login = () => {
               window.location.href = KAKAO_AUTH_URL;
             }}
           >
-            카카오로 시작하기
+            카카오로 시작하기{}
           </KakaoButton>
           <NaverButton>네이버로 시작하기</NaverButton>
           <FindButton

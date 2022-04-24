@@ -8,7 +8,7 @@ const SET_TOTAL = "SET_TOTAL";
 const PLUS_QTY = "PLUS_QTY";
 const MINUS_QTY = "MINUS_QTY";
 const PLUS_PRICE = "PLUS_PRICE";
-const MINUS_PRICE= "MINUS_PRICE";
+const MINUS_PRICE = "MINUS_PRICE";
 
 const setCart = createAction(SET_CART, (product_list) => ({ product_list }));
 const deleteItem = createAction(DELETE_ITEM, (id, product_list) => ({
@@ -18,8 +18,8 @@ const deleteItem = createAction(DELETE_ITEM, (id, product_list) => ({
 const setTotal = createAction(SET_TOTAL, (total) => ({ total }));
 const plusQty = createAction(PLUS_QTY, (productId) => ({ productId }));
 const minusQty = createAction(MINUS_QTY, (productId) => ({ productId }));
-const plusPrice = createAction(PLUS_PRICE, (productId) => ({productId}));
-const minusPrice = createAction(MINUS_PRICE, (productId) => ({productId}));
+const plusPrice = createAction(PLUS_PRICE, (productId) => ({ productId }));
+const minusPrice = createAction(MINUS_PRICE, (productId) => ({ productId }));
 
 const initialState = {
   list: [],
@@ -88,6 +88,7 @@ const deleteItemDB = (pId, pOption, Token) => {
         }
       )
       .then(function (res) {
+        dispatch(deleteItem(pId));
         window.alert("삭제가 완료되었습니다.");
         history.replace("/cart");
       })
@@ -131,7 +132,7 @@ export default handleActions(
         let idx = draft.list.lists.findIndex(
           (p) => p.productId === action.payload.productId
         );
-        draft.list.splice(idx, 1);
+        draft.list.lists.splice(idx, 1);
       }),
 
     [SET_TOTAL]: (state, action) =>
@@ -141,27 +142,23 @@ export default handleActions(
 
     [PLUS_QTY]: (state, action) =>
       produce(state, (draft) => {
-        const index = state.list.lists.findIndex((p) => 
-         p.productId === action.payload.productId)
+        const index = state.list.lists.findIndex(
+          (p) => p.productId === action.payload.productId
+        );
         draft.list.lists[index].quantity = draft.list.lists[index].quantity + 1;
       }),
 
     [MINUS_QTY]: (state, action) =>
       produce(state, (draft) => {
-        const index = state.list.lists.findIndex((p) =>
-        p.productId === action.payload.productId)
+        const index = state.list.lists.findIndex(
+          (p) => p.productId === action.payload.productId
+        );
         draft.list.lists[index].quantity = draft.list.lists[index].quantity - 1;
       }),
 
-    [PLUS_PRICE]: (state, action) => 
-      produce(state,(draft) => {
-       
-      }),
+    [PLUS_PRICE]: (state, action) => produce(state, (draft) => {}),
 
-    [MINUS_PRICE]: (state, action) => 
-      produce(state,(draft) => {
-
-      }),      
+    [MINUS_PRICE]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
 );

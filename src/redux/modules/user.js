@@ -48,7 +48,7 @@ const kakaoLogin = (code) => {
 
         const KAKAO_TOKEN = res.data.accessToken;
 
-        sessionStorage.setItem("kakao_token", KAKAO_TOKEN); //예시로 로컬에 저장함
+        sessionStorage.setItem("token", KAKAO_TOKEN); //예시로 로컬에 저장함
 
         history.replace("/"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
