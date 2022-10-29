@@ -29,5 +29,5 @@
 
 ## 🔗 링크
 
-- **시연 영상** - <a href="https://www.youtube.com/watch?v=wFD5sYXNJx0">시연영상 보러가기</a>
+- **YouTube** - <a href="https://www.youtube.com/watch?v=wFD5sYXNJx0">시연영상 보러가기</a>
 - **Notion** - <a href="https://www.notion.so/6-7-2658710cf552493985602e86b6c56080" >정육각 Notion으로 이동</a>
